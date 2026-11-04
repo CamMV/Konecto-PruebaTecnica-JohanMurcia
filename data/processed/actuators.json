@@ -1,0 +1,3312 @@
+{
+  "source_pdf": "docs/data/series_76_electric_data.pdf",
+  "tables": [
+    {
+      "table_id": "wp_110v_1ph",
+      "page": 1,
+      "title": "WEATHERPROOF - CSA, CE, & UKCA | 110V - Single Phase Power",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "power_desc": "110V - Single Phase Power",
+      "notes": [
+        "* Sizes 6 and 7 are not CSA Certified",
+        "1. Full load current (FLA) @ Max. rated load",
+        "2. Locked rotor current (LRA) @ Locked rotor load",
+        "3. Allowable motor voltage tolerance: +/- 10%",
+        "4. Allowable power frequency tolerance: +/- 5%",
+        "5. Duty cycle per IEC 60034-1 for on/off and modulating service",
+        "6. Starts and cycles per hour based on rated torque"
+      ]
+    },
+    {
+      "table_id": "wp_220v_1ph",
+      "page": 1,
+      "title": "WEATHERPROOF - CSA, CE, & UKCA | 220V - Single Phase Power",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "power_desc": "220V - Single Phase Power",
+      "notes": [
+        "* Sizes 6 and 7 are not CSA Certified",
+        "1. Full load current (FLA) @ Max. rated load",
+        "2. Locked rotor current (LRA) @ Locked rotor load",
+        "3. Allowable motor voltage tolerance: +/- 10%",
+        "4. Allowable power frequency tolerance: +/- 5%",
+        "5. Duty cycle per IEC 60034-1 for on/off and modulating service",
+        "6. Starts and cycles per hour based on rated torque"
+      ]
+    },
+    {
+      "table_id": "wp_220v_3ph",
+      "page": 2,
+      "title": "WEATHERPROOF - CSA, CE, & UKCA | 220V - 3 Phase Power",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "power_desc": "220V - 3 Phase Power",
+      "notes": [
+        "1. Full load current (FLA) @ Max. rated load",
+        "2. Locked rotor current (LRA) @ Locked rotor load",
+        "3. Allowable motor voltage tolerance: +/- 10%",
+        "4. Allowable power frequency tolerance: +/- 5%",
+        "5. Duty cycle per IEC 60034-1 for on/off and modulating service",
+        "6. Starts and cycles per hour based on rated torque"
+      ]
+    },
+    {
+      "table_id": "xp_24v_acdc_onoff",
+      "page": 3,
+      "title": "EXPLOSIONPROOF - CSA | 24V AC/DC Power - On/Off",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "power_desc": "24V AC/DC Power - On/Off",
+      "notes": [
+        "Hazardous Location Certification (Area Classification)",
+        "Class I, Division 1, GRoups C, D; T4",
+        "Ex d IIB T4 Gb",
+        "Class I, Zone 1, AEx d IIB T4 Gb",
+        "1. Full load current (FLA) @ Max. rated load",
+        "2. Locked rotor current (LRA) @ Locked rotor load",
+        "3. Allowable motor voltage tolerance: +/- 10%",
+        "4. Allowable power frequency tolerance: +/- 5%",
+        "5. Duty cycle per IEC 60034-1 for on/off and modulating service",
+        "6. Starts and cycles per hour based on rated torque"
+      ]
+    },
+    {
+      "table_id": "xp_24v_dc_mod",
+      "page": 3,
+      "title": "EXPLOSIONPROOF - CSA | 24V DC Power - Modulating",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "power_desc": "24V DC Power - Modulating",
+      "notes": [
+        "Hazardous Location Certification (Area Classification)",
+        "Class I, Division 1, GRoups C, D; T4",
+        "Ex d IIB T4 Gb",
+        "Class I, Zone 1, AEx d IIB T4 Gb",
+        "1. Full load current (FLA) @ Max. rated load",
+        "2. Locked rotor current (LRA) @ Locked rotor load",
+        "3. Allowable motor voltage tolerance: +/- 10%",
+        "4. Allowable power frequency tolerance: +/- 5%",
+        "5. Duty cycle per IEC 60034-1 for on/off and modulating service",
+        "6. Starts and cycles per hour based on rated torque"
+      ]
+    },
+    {
+      "table_id": "xp_110v_1ph",
+      "page": 4,
+      "title": "EXPLOSIONPROOF - CSA | 110V - Single Phase Power",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "power_desc": "110V - Single Phase Power",
+      "notes": [
+        "1. Hazardous Location Certification (Area Classification)",
+        "Class I, Division 1, Groups C, D; T4",
+        "Ex d IIB T4 Gb",
+        "Class I, Zone 1, AEx d IIB T4 Gb",
+        "2. Full load current (FLA) @ Max. rated load",
+        "3. Locked rotor current (LRA) @ Locked rotor load",
+        "4. Allowable motor voltage tolerance: +/- 10%",
+        "5. Allowable power frequency tolerance: +/- 5%",
+        "6. Duty cycle per IEC 60034-1 for on/off and modulating service",
+        "7. Starts and cycles per hour based on rated torque"
+      ]
+    },
+    {
+      "table_id": "xp_220v_1ph",
+      "page": 4,
+      "title": "EXPLOSIONPROOF - CSA | 220V - Single Phase Power",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "power_desc": "220V - Single Phase Power",
+      "notes": [
+        "1. Hazardous Location Certification (Area Classification)",
+        "Class I, Division 1, Groups C, D; T4",
+        "Ex d IIB T4 Gb",
+        "Class I, Zone 1, AEx d IIB T4 Gb",
+        "2. Full load current (FLA) @ Max. rated load",
+        "3. Locked rotor current (LRA) @ Locked rotor load",
+        "4. Allowable motor voltage tolerance: +/- 10%",
+        "5. Allowable power frequency tolerance: +/- 5%",
+        "6. Duty cycle per IEC 60034-1 for on/off and modulating service",
+        "7. Starts and cycles per hour based on rated torque"
+      ]
+    }
+  ],
+  "actuators": [
+    {
+      "base_part_number": "761A00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 15,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 700,
+          "torque_nm": 80,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 36,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 580,
+          "torque_nm": 65,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 17,
+          "fla_a": "1.2",
+          "lra_a": "1.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 20,
+          "fla_a": "1.1",
+          "lra_a": "1.3"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 0
+      }
+    },
+    {
+      "base_part_number": "761B00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 15,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 880,
+          "torque_nm": 100,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 31,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 620,
+          "torque_nm": 70,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 19,
+          "fla_a": "1.3",
+          "lra_a": "1.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 23,
+          "fla_a": "1.2",
+          "lra_a": "1.3"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 1
+      }
+    },
+    {
+      "base_part_number": "762A00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 1330,
+          "torque_nm": 150,
+          "duty_cycle_pct": 50,
+          "cycles_per_hour": 42,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1150,
+          "torque_nm": 130,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 18,
+          "fla_a": "2.3",
+          "lra_a": "2.5"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 21,
+          "fla_a": "2.3",
+          "lra_a": "2.4"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 2
+      }
+    },
+    {
+      "base_part_number": "762B00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 1750,
+          "torque_nm": 200,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": 21,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1330,
+          "torque_nm": 150,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 25,
+          "fla_a": "2.3",
+          "lra_a": "2.5"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 30,
+          "fla_a": "2.3",
+          "lra_a": "2.4"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 3
+      }
+    },
+    {
+      "base_part_number": "763A00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 2650,
+          "torque_nm": 300,
+          "duty_cycle_pct": 50,
+          "cycles_per_hour": 29,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1950,
+          "torque_nm": 220,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 25,
+          "fla_a": "2.6",
+          "lra_a": "2.9"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 31,
+          "fla_a": "2.5",
+          "lra_a": "3.0"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 4
+      }
+    },
+    {
+      "base_part_number": "763B00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 90,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 4400,
+          "torque_nm": 500,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 16,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 3350,
+          "torque_nm": 380,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 26,
+          "fla_a": "4.8",
+          "lra_a": "5.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 32,
+          "fla_a": "4.6",
+          "lra_a": "4.9"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 5
+      }
+    },
+    {
+      "base_part_number": "763C00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 90,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 4800,
+          "torque_nm": 550,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 13,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 3540,
+          "torque_nm": 400,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 33,
+          "fla_a": "4.8",
+          "lra_a": "5.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 39,
+          "fla_a": "4.6",
+          "lra_a": "4.9"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 6
+      }
+    },
+    {
+      "base_part_number": "764A00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 6650,
+          "torque_nm": 750,
+          "duty_cycle_pct": 25,
+          "cycles_per_hour": 12,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 6020,
+          "torque_nm": 680,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": null,
+          "starts_per_hour": 840
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 30,
+          "fla_a": "6.5",
+          "lra_a": "7.3"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 36,
+          "fla_a": "6.5",
+          "lra_a": "7.4"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 7
+      }
+    },
+    {
+      "base_part_number": "764B00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 9700,
+          "torque_nm": 1100,
+          "duty_cycle_pct": 25,
+          "cycles_per_hour": 10,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 8230,
+          "torque_nm": 930,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": null,
+          "starts_per_hour": 840
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 36,
+          "fla_a": "6.8",
+          "lra_a": "7.3"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 43,
+          "fla_a": "6.8",
+          "lra_a": "7.4"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 8
+      }
+    },
+    {
+      "base_part_number": "765A00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 17700,
+          "torque_nm": 2000,
+          "duty_cycle_pct": 25,
+          "cycles_per_hour": 4,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 15000,
+          "torque_nm": 1700,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": null,
+          "starts_per_hour": 840
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 88,
+          "fla_a": "6.8",
+          "lra_a": "7.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 106,
+          "fla_a": "6.8",
+          "lra_a": "7.4"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 9
+      }
+    },
+    {
+      "base_part_number": "765B00-11300000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 26500,
+          "torque_nm": 3000,
+          "duty_cycle_pct": 25,
+          "cycles_per_hour": 3,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 22550,
+          "torque_nm": 2550,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": null,
+          "starts_per_hour": 840
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 108,
+          "fla_a": "7.0",
+          "lra_a": "7.3"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 130,
+          "fla_a": "7.0",
+          "lra_a": "7.4"
+        }
+      ],
+      "source": {
+        "table_id": "wp_110v_1ph",
+        "page": 1,
+        "row_index": 10
+      }
+    },
+    {
+      "base_part_number": "761A00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 15,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 700,
+          "torque_nm": 80,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 36,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 580,
+          "torque_nm": 65,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 17,
+          "fla_a": "0.7",
+          "lra_a": "0.7"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 20,
+          "fla_a": "0.7",
+          "lra_a": "0.7"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 0
+      }
+    },
+    {
+      "base_part_number": "761B00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 15,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 880,
+          "torque_nm": 100,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 31,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 620,
+          "torque_nm": 70,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 19,
+          "fla_a": "0.7",
+          "lra_a": "0.7"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 23,
+          "fla_a": "0.7",
+          "lra_a": "0.7"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 1
+      }
+    },
+    {
+      "base_part_number": "762A00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 1330,
+          "torque_nm": 150,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": 30,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1150,
+          "torque_nm": 130,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 18,
+          "fla_a": "1.0",
+          "lra_a": "1.2"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 21,
+          "fla_a": "1.0",
+          "lra_a": "1.1"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 2
+      }
+    },
+    {
+      "base_part_number": "762B00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 1750,
+          "torque_nm": 200,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": 21,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1330,
+          "torque_nm": 150,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 24,
+          "fla_a": "1.1",
+          "lra_a": "1.2"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 29,
+          "fla_a": "1.1",
+          "lra_a": "1.1"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 3
+      }
+    },
+    {
+      "base_part_number": "763A00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 2650,
+          "torque_nm": 300,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 24,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1950,
+          "torque_nm": 220,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 24,
+          "fla_a": "1.3",
+          "lra_a": "1.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 29,
+          "fla_a": "1.3",
+          "lra_a": "1.5"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 4
+      }
+    },
+    {
+      "base_part_number": "763B00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 90,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 4400,
+          "torque_nm": 500,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 16,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 3350,
+          "torque_nm": 380,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 26,
+          "fla_a": "2.2",
+          "lra_a": "2.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 32,
+          "fla_a": "2.1",
+          "lra_a": "2.5"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 5
+      }
+    },
+    {
+      "base_part_number": "763C00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 90,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 4800,
+          "torque_nm": 550,
+          "duty_cycle_pct": 25,
+          "cycles_per_hour": 13,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 3540,
+          "torque_nm": 400,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 28,
+          "fla_a": "2.2",
+          "lra_a": "2.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 34,
+          "fla_a": "2.1",
+          "lra_a": "2.5"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 6
+      }
+    },
+    {
+      "base_part_number": "764A00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 6650,
+          "torque_nm": 750,
+          "duty_cycle_pct": 25,
+          "cycles_per_hour": 13,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 6020,
+          "torque_nm": 680,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": null,
+          "starts_per_hour": 840
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 27,
+          "fla_a": "3.2",
+          "lra_a": "3.8"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 33,
+          "fla_a": "3.0",
+          "lra_a": "3.9"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 7
+      }
+    },
+    {
+      "base_part_number": "764B00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 9700,
+          "torque_nm": 1100,
+          "duty_cycle_pct": 25,
+          "cycles_per_hour": 10,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 7080,
+          "torque_nm": 800,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": null,
+          "starts_per_hour": 840
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 36,
+          "fla_a": "3.6",
+          "lra_a": "3.9"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 43,
+          "fla_a": "3.5",
+          "lra_a": "3.6"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 8
+      }
+    },
+    {
+      "base_part_number": "765A00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 17700,
+          "torque_nm": 2000,
+          "duty_cycle_pct": 25,
+          "cycles_per_hour": 4,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 15000,
+          "torque_nm": 1700,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": null,
+          "starts_per_hour": 840
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 88,
+          "fla_a": "3.3",
+          "lra_a": "3.8"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 106,
+          "fla_a": "3.2",
+          "lra_a": "3.9"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 9
+      }
+    },
+    {
+      "base_part_number": "765B00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 26500,
+          "torque_nm": 3000,
+          "duty_cycle_pct": 25,
+          "cycles_per_hour": 3,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 22550,
+          "torque_nm": 2550,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": null,
+          "starts_per_hour": 840
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 108,
+          "fla_a": "3.5",
+          "lra_a": "3.8"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 130,
+          "fla_a": "3.5",
+          "lra_a": "3.9"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 10
+      }
+    },
+    {
+      "base_part_number": "766A00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": false,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 700,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 31000,
+          "torque_nm": 3500,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 18,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 30975,
+          "torque_nm": 3500,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 33,
+          "fla_a": "11.2",
+          "lra_a": "17.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 39,
+          "fla_a": "11.2",
+          "lra_a": "17.0"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 11
+      }
+    },
+    {
+      "base_part_number": "766B00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": false,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 700,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 35400,
+          "torque_nm": 4000,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 12,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 35400,
+          "torque_nm": 4000,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 49,
+          "fla_a": "11.2",
+          "lra_a": "17.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 58,
+          "fla_a": "11.2",
+          "lra_a": "17.0"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 12
+      }
+    },
+    {
+      "base_part_number": "767A00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": false,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 700,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 53100,
+          "torque_nm": 6000,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 9,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 53100,
+          "torque_nm": 6000,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 66,
+          "fla_a": "9.0",
+          "lra_a": "17.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 78,
+          "fla_a": "9.0",
+          "lra_a": "17.0"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 13
+      }
+    },
+    {
+      "base_part_number": "767B00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": false,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 700,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 70800,
+          "torque_nm": 8000,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 6,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 70800,
+          "torque_nm": 8000,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 98,
+          "fla_a": "9.0",
+          "lra_a": "17.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 116,
+          "fla_a": "9.0",
+          "lra_a": "17.0"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 14
+      }
+    },
+    {
+      "base_part_number": "767C00-11320000/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": false,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 700,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 79700,
+          "torque_nm": 9000,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 6,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 79650,
+          "torque_nm": 9000,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 99,
+          "fla_a": "9.0",
+          "lra_a": "17.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 117,
+          "fla_a": "9.0",
+          "lra_a": "17.0"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_1ph",
+        "page": 1,
+        "row_index": 15
+      }
+    },
+    {
+      "base_part_number": "761A00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": null,
+      "data_available": false,
+      "ratings": [],
+      "electrical": [],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 0
+      }
+    },
+    {
+      "base_part_number": "761B00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": null,
+      "data_available": false,
+      "ratings": [],
+      "electrical": [],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 1
+      }
+    },
+    {
+      "base_part_number": "762A00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": null,
+      "data_available": false,
+      "ratings": [],
+      "electrical": [],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 2
+      }
+    },
+    {
+      "base_part_number": "762B00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": null,
+      "data_available": false,
+      "ratings": [],
+      "electrical": [],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 3
+      }
+    },
+    {
+      "base_part_number": "763A00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "general",
+          "torque_inlb": 2650,
+          "torque_nm": 300,
+          "duty_cycle_pct": 70,
+          "cycles_per_hour": 39,
+          "starts_per_hour": 1200
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 26,
+          "fla_a": "1.0",
+          "lra_a": "1.2"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 32,
+          "fla_a": "1.0",
+          "lra_a": "1.2"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 4
+      }
+    },
+    {
+      "base_part_number": "763B00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": 90,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "general",
+          "torque_inlb": 4400,
+          "torque_nm": 500,
+          "duty_cycle_pct": 70,
+          "cycles_per_hour": 39,
+          "starts_per_hour": 1200
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 26,
+          "fla_a": "2.0",
+          "lra_a": "2.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 32,
+          "fla_a": "2.0",
+          "lra_a": "2.4"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 5
+      }
+    },
+    {
+      "base_part_number": "763C00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": 90,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "general",
+          "torque_inlb": 5300,
+          "torque_nm": 600,
+          "duty_cycle_pct": 70,
+          "cycles_per_hour": 32,
+          "starts_per_hour": 1200
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 32,
+          "fla_a": "2.0",
+          "lra_a": "2.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 39,
+          "fla_a": "2.0",
+          "lra_a": "2.4"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 6
+      }
+    },
+    {
+      "base_part_number": "764A00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "general",
+          "torque_inlb": 7080,
+          "torque_nm": 800,
+          "duty_cycle_pct": 70,
+          "cycles_per_hour": 36,
+          "starts_per_hour": 1200
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 29,
+          "fla_a": "3.4",
+          "lra_a": "4.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 35,
+          "fla_a": "3.4",
+          "lra_a": "4.0"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 7
+      }
+    },
+    {
+      "base_part_number": "764B00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "general",
+          "torque_inlb": 10600,
+          "torque_nm": 1200,
+          "duty_cycle_pct": 70,
+          "cycles_per_hour": 29,
+          "starts_per_hour": 1200
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 36,
+          "fla_a": "3.4",
+          "lra_a": "4.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 43,
+          "fla_a": "3.4",
+          "lra_a": "4.0"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 8
+      }
+    },
+    {
+      "base_part_number": "765A00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "general",
+          "torque_inlb": 17700,
+          "torque_nm": 2000,
+          "duty_cycle_pct": 50,
+          "cycles_per_hour": 8,
+          "starts_per_hour": 1200
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 88,
+          "fla_a": "3.4",
+          "lra_a": "4.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 105,
+          "fla_a": "3.4",
+          "lra_a": "4.0"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 9
+      }
+    },
+    {
+      "base_part_number": "765B00-11330C00/A",
+      "enclosure": "weatherproof",
+      "certifications": [
+        "CSA",
+        "CE",
+        "UKCA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 3,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "general",
+          "torque_inlb": 26500,
+          "torque_nm": 3000,
+          "duty_cycle_pct": 50,
+          "cycles_per_hour": 6,
+          "starts_per_hour": 1200
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 108,
+          "fla_a": "3.4",
+          "lra_a": "4.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 130,
+          "fla_a": "3.4",
+          "lra_a": "4.0"
+        }
+      ],
+      "source": {
+        "table_id": "wp_220v_3ph",
+        "page": 2,
+        "row_index": 10
+      }
+    },
+    {
+      "base_part_number": "761X30-11380000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 24,
+      "phase": null,
+      "current_type": "ac_dc",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 620,
+          "torque_nm": 70,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 350,
+          "starts_per_hour": null
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": null,
+          "operating_speed_s": 17,
+          "fla_a": "5.0",
+          "lra_a": "12.8"
+        }
+      ],
+      "source": {
+        "table_id": "xp_24v_acdc_onoff",
+        "page": 3,
+        "row_index": 0
+      }
+    },
+    {
+      "base_part_number": "761Y30-11380000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 24,
+      "phase": null,
+      "current_type": "ac_dc",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 700,
+          "torque_nm": 80,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 300,
+          "starts_per_hour": null
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": null,
+          "operating_speed_s": 20,
+          "fla_a": "6.3",
+          "lra_a": "12.8"
+        }
+      ],
+      "source": {
+        "table_id": "xp_24v_acdc_onoff",
+        "page": 3,
+        "row_index": 1
+      }
+    },
+    {
+      "base_part_number": "762X30-11380000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 24,
+      "phase": null,
+      "current_type": "ac_dc",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 1350,
+          "torque_nm": 150,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 200,
+          "starts_per_hour": null
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": null,
+          "operating_speed_s": 22,
+          "fla_a": "6.0",
+          "lra_a": "16.9"
+        }
+      ],
+      "source": {
+        "table_id": "xp_24v_acdc_onoff",
+        "page": 3,
+        "row_index": 2
+      }
+    },
+    {
+      "base_part_number": "762Y30-11380000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 24,
+      "phase": null,
+      "current_type": "ac_dc",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 1410,
+          "torque_nm": 160,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 200,
+          "starts_per_hour": null
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": null,
+          "operating_speed_s": 22,
+          "fla_a": "7.4",
+          "lra_a": "16.9"
+        }
+      ],
+      "source": {
+        "table_id": "xp_24v_acdc_onoff",
+        "page": 3,
+        "row_index": 3
+      }
+    },
+    {
+      "base_part_number": "763X30-11380000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 24,
+      "phase": null,
+      "current_type": "ac_dc",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 2120,
+          "torque_nm": 240,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": 160,
+          "starts_per_hour": null
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": null,
+          "operating_speed_s": 32,
+          "fla_a": "8.9",
+          "lra_a": "30.8"
+        }
+      ],
+      "source": {
+        "table_id": "xp_24v_acdc_onoff",
+        "page": 3,
+        "row_index": 4
+      }
+    },
+    {
+      "base_part_number": "761X30-11370000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 24,
+      "phase": null,
+      "current_type": "dc",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "modulating",
+          "torque_inlb": 560,
+          "torque_nm": 65,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": null,
+          "operating_speed_s": 17,
+          "fla_a": "5.0",
+          "lra_a": "12.8"
+        }
+      ],
+      "source": {
+        "table_id": "xp_24v_dc_mod",
+        "page": 3,
+        "row_index": 0
+      }
+    },
+    {
+      "base_part_number": "761Y30-11370000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 24,
+      "phase": null,
+      "current_type": "dc",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "modulating",
+          "torque_inlb": 630,
+          "torque_nm": 72,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": null,
+          "operating_speed_s": 20,
+          "fla_a": "6.3",
+          "lra_a": "12.8"
+        }
+      ],
+      "source": {
+        "table_id": "xp_24v_dc_mod",
+        "page": 3,
+        "row_index": 1
+      }
+    },
+    {
+      "base_part_number": "762X30-11370000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 24,
+      "phase": null,
+      "current_type": "dc",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1150,
+          "torque_nm": 130,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": null,
+          "operating_speed_s": 22,
+          "fla_a": "6.0",
+          "lra_a": "16.9"
+        }
+      ],
+      "source": {
+        "table_id": "xp_24v_dc_mod",
+        "page": 3,
+        "row_index": 2
+      }
+    },
+    {
+      "base_part_number": "762Y30-11370000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 24,
+      "phase": null,
+      "current_type": "dc",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1270,
+          "torque_nm": 145,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": null,
+          "operating_speed_s": 22,
+          "fla_a": "7.4",
+          "lra_a": "16.9"
+        }
+      ],
+      "source": {
+        "table_id": "xp_24v_dc_mod",
+        "page": 3,
+        "row_index": 3
+      }
+    },
+    {
+      "base_part_number": "763X30-11370000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 24,
+      "phase": null,
+      "current_type": "dc",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1900,
+          "torque_nm": 220,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": null,
+          "starts_per_hour": 840
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": null,
+          "operating_speed_s": 32,
+          "fla_a": "8.9",
+          "lra_a": "30.8"
+        }
+      ],
+      "source": {
+        "table_id": "xp_24v_dc_mod",
+        "page": 3,
+        "row_index": 4
+      }
+    },
+    {
+      "base_part_number": "761X30-11300000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 15,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 690,
+          "torque_nm": 80,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 190,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 550,
+          "torque_nm": 65,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 20,
+          "fla_a": "1.2",
+          "lra_a": "1.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 23,
+          "fla_a": "1.1",
+          "lra_a": "1.3"
+        }
+      ],
+      "source": {
+        "table_id": "xp_110v_1ph",
+        "page": 4,
+        "row_index": 0
+      }
+    },
+    {
+      "base_part_number": "761Y30-11300000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 15,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 860,
+          "torque_nm": 100,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 190,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 680,
+          "torque_nm": 80,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 20,
+          "fla_a": "1.2",
+          "lra_a": "1.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 23,
+          "fla_a": "1.1",
+          "lra_a": "1.3"
+        }
+      ],
+      "source": {
+        "table_id": "xp_110v_1ph",
+        "page": 4,
+        "row_index": 1
+      }
+    },
+    {
+      "base_part_number": "762X30-11300000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 1350,
+          "torque_nm": 150,
+          "duty_cycle_pct": 70,
+          "cycles_per_hour": 100,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1150,
+          "torque_nm": 130,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 21,
+          "fla_a": "2.0",
+          "lra_a": "2.5"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 25,
+          "fla_a": "1.9",
+          "lra_a": "2.4"
+        }
+      ],
+      "source": {
+        "table_id": "xp_110v_1ph",
+        "page": 4,
+        "row_index": 2
+      }
+    },
+    {
+      "base_part_number": "762Y30-11300000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 1770,
+          "torque_nm": 200,
+          "duty_cycle_pct": 70,
+          "cycles_per_hour": 100,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1360,
+          "torque_nm": 160,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 21,
+          "fla_a": "2.3",
+          "lra_a": "2.5"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 25,
+          "fla_a": "2.2",
+          "lra_a": "2.4"
+        }
+      ],
+      "source": {
+        "table_id": "xp_110v_1ph",
+        "page": 4,
+        "row_index": 3
+      }
+    },
+    {
+      "base_part_number": "763X30-11300000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 2640,
+          "torque_nm": 300,
+          "duty_cycle_pct": 70,
+          "cycles_per_hour": 80,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 2110,
+          "torque_nm": 240,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 26,
+          "fla_a": "2.3",
+          "lra_a": "2.9"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 31,
+          "fla_a": "2.0",
+          "lra_a": "3.0"
+        }
+      ],
+      "source": {
+        "table_id": "xp_110v_1ph",
+        "page": 4,
+        "row_index": 4
+      }
+    },
+    {
+      "base_part_number": "763Y30-11300000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 90,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 3980,
+          "torque_nm": 450,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 170,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 3180,
+          "torque_nm": 360,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 29,
+          "fla_a": "4.5",
+          "lra_a": "5.0"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 35,
+          "fla_a": "3.8",
+          "lra_a": "4.9"
+        }
+      ],
+      "source": {
+        "table_id": "xp_110v_1ph",
+        "page": 4,
+        "row_index": 5
+      }
+    },
+    {
+      "base_part_number": "764X30-11300000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 90,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 6900,
+          "torque_nm": 800,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 160,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 5520,
+          "torque_nm": 640,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 31,
+          "fla_a": "5.1",
+          "lra_a": "7.3"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 37,
+          "fla_a": "5.0",
+          "lra_a": "7.4"
+        }
+      ],
+      "source": {
+        "table_id": "xp_110v_1ph",
+        "page": 4,
+        "row_index": 6
+      }
+    },
+    {
+      "base_part_number": "764Y30-11300000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 9600,
+          "torque_nm": 1100,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 160,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 7680,
+          "torque_nm": 880,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 31,
+          "fla_a": "5.4",
+          "lra_a": "7.3"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 37,
+          "fla_a": "5.4",
+          "lra_a": "7.4"
+        }
+      ],
+      "source": {
+        "table_id": "xp_110v_1ph",
+        "page": 4,
+        "row_index": 7
+      }
+    },
+    {
+      "base_part_number": "765X30-11300000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 17500,
+          "torque_nm": 2000,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 50,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 14000,
+          "torque_nm": 1600,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 93,
+          "fla_a": "5.8",
+          "lra_a": "7.3"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 112,
+          "fla_a": "5.7",
+          "lra_a": "7.4"
+        }
+      ],
+      "source": {
+        "table_id": "xp_110v_1ph",
+        "page": 4,
+        "row_index": 8
+      }
+    },
+    {
+      "base_part_number": "765Y30-11300000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 110,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 25900,
+          "torque_nm": 3000,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 50,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 20720,
+          "torque_nm": 2400,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 93,
+          "fla_a": "6.3",
+          "lra_a": "7.3"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 112,
+          "fla_a": "6.3",
+          "lra_a": "7.4"
+        }
+      ],
+      "source": {
+        "table_id": "xp_110v_1ph",
+        "page": 4,
+        "row_index": 9
+      }
+    },
+    {
+      "base_part_number": "761X30-11320000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 15,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 690,
+          "torque_nm": 80,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 190,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 550,
+          "torque_nm": 65,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 20,
+          "fla_a": "0.6",
+          "lra_a": "0.7"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 23,
+          "fla_a": "0.6",
+          "lra_a": "0.7"
+        }
+      ],
+      "source": {
+        "table_id": "xp_220v_1ph",
+        "page": 4,
+        "row_index": 0
+      }
+    },
+    {
+      "base_part_number": "761Y30-11320000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 15,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 790,
+          "torque_nm": 90,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 190,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 630,
+          "torque_nm": 72,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 20,
+          "fla_a": "0.6",
+          "lra_a": "0.7"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 23,
+          "fla_a": "0.6",
+          "lra_a": "0.7"
+        }
+      ],
+      "source": {
+        "table_id": "xp_220v_1ph",
+        "page": 4,
+        "row_index": 1
+      }
+    },
+    {
+      "base_part_number": "762X30-11320000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 1350,
+          "torque_nm": 150,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": 180,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1150,
+          "torque_nm": 130,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 23,
+          "fla_a": "1.0",
+          "lra_a": "1.2"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 28,
+          "fla_a": "0.9",
+          "lra_a": "1.1"
+        }
+      ],
+      "source": {
+        "table_id": "xp_220v_1ph",
+        "page": 4,
+        "row_index": 2
+      }
+    },
+    {
+      "base_part_number": "762Y30-11320000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 1590,
+          "torque_nm": 180,
+          "duty_cycle_pct": 35,
+          "cycles_per_hour": 180,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1270,
+          "torque_nm": 145,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 23,
+          "fla_a": "1.1",
+          "lra_a": "1.2"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 28,
+          "fla_a": "1.0",
+          "lra_a": "1.1"
+        }
+      ],
+      "source": {
+        "table_id": "xp_220v_1ph",
+        "page": 4,
+        "row_index": 3
+      }
+    },
+    {
+      "base_part_number": "763X30-11320000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 40,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 2300,
+          "torque_nm": 260,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": 140,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 1900,
+          "torque_nm": 220,
+          "duty_cycle_pct": 40,
+          "cycles_per_hour": null,
+          "starts_per_hour": 960
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 26,
+          "fla_a": "1.3",
+          "lra_a": "1.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 31,
+          "fla_a": "1.3",
+          "lra_a": "1.5"
+        }
+      ],
+      "source": {
+        "table_id": "xp_220v_1ph",
+        "page": 4,
+        "row_index": 4
+      }
+    },
+    {
+      "base_part_number": "763Y30-11320000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 90,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 3980,
+          "torque_nm": 450,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 170,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 3180,
+          "torque_nm": 360,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 29,
+          "fla_a": "1.9",
+          "lra_a": "2.4"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 35,
+          "fla_a": "1.5",
+          "lra_a": "2.5"
+        }
+      ],
+      "source": {
+        "table_id": "xp_220v_1ph",
+        "page": 4,
+        "row_index": 5
+      }
+    },
+    {
+      "base_part_number": "764X30-11320000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 6900,
+          "torque_nm": 800,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 140,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 5520,
+          "torque_nm": 640,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 34,
+          "fla_a": "2.4",
+          "lra_a": "3.8"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 41,
+          "fla_a": "2.2",
+          "lra_a": "3.9"
+        }
+      ],
+      "source": {
+        "table_id": "xp_220v_1ph",
+        "page": 4,
+        "row_index": 6
+      }
+    },
+    {
+      "base_part_number": "764Y30-11320000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 8300,
+          "torque_nm": 940,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 140,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 6640,
+          "torque_nm": 750,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 34,
+          "fla_a": "3.4",
+          "lra_a": "3.8"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 41,
+          "fla_a": "3.3",
+          "lra_a": "3.9"
+        }
+      ],
+      "source": {
+        "table_id": "xp_220v_1ph",
+        "page": 4,
+        "row_index": 7
+      }
+    },
+    {
+      "base_part_number": "765X30-11320000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 17500,
+          "torque_nm": 2000,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 50,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 14000,
+          "torque_nm": 1600,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 93,
+          "fla_a": "2.4",
+          "lra_a": "3.8"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 112,
+          "fla_a": "2.2",
+          "lra_a": "3.9"
+        }
+      ],
+      "source": {
+        "table_id": "xp_220v_1ph",
+        "page": 4,
+        "row_index": 8
+      }
+    },
+    {
+      "base_part_number": "765Y30-11320000/A",
+      "enclosure": "explosionproof",
+      "certifications": [
+        "CSA"
+      ],
+      "csa_certified": true,
+      "voltage_v": 220,
+      "phase": 1,
+      "current_type": "ac",
+      "motor_power_w": 180,
+      "data_available": true,
+      "ratings": [
+        {
+          "service_type": "on_off",
+          "torque_inlb": 25900,
+          "torque_nm": 3000,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": 50,
+          "starts_per_hour": null
+        },
+        {
+          "service_type": "modulating",
+          "torque_inlb": 20720,
+          "torque_nm": 2400,
+          "duty_cycle_pct": 30,
+          "cycles_per_hour": null,
+          "starts_per_hour": 720
+        }
+      ],
+      "electrical": [
+        {
+          "frequency_hz": 60,
+          "operating_speed_s": 93,
+          "fla_a": "3.4",
+          "lra_a": "3.8"
+        },
+        {
+          "frequency_hz": 50,
+          "operating_speed_s": 112,
+          "fla_a": "3.3",
+          "lra_a": "3.9"
+        }
+      ],
+      "source": {
+        "table_id": "xp_220v_1ph",
+        "page": 4,
+        "row_index": 9
+      }
+    }
+  ]
+}

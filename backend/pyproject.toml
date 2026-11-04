@@ -1,0 +1,27 @@
+[project]
+name = "series76-backend"
+version = "0.1.0"
+description = "Series 76 technical assistant: data schema, ingestion pipeline and retrieval"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.8",
+    "pydantic-settings>=2.4",
+    "sqlalchemy>=2.0.30",
+    "psycopg[binary]>=3.2",
+    "pgvector>=0.3",
+    "alembic>=1.13",
+    "google-genai>=1.0",
+    "langchain-openai>=0.2",
+    "langchain-google-genai>=2.0",
+    "pyyaml>=6.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

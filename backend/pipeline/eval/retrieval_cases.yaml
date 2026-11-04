@@ -1,0 +1,145 @@
+# Retrieval evaluation cases (same set for approach A and, later, approach B).
+#
+# Each case defines the set of correct part numbers in one of two ways:
+#   expected:        explicit list of part numbers
+#   expected_where:  SQL WHERE over actuator_flat (valid set computed from the data)
+# `expected: []` = no correct answer in the catalog (excluded from metrics, reported
+# for qualitative review: the agent must say "nothing meets this").
+#
+# Categories: exact_id, id_variant, id_typo, partial_id, requirements, no_answer
+
+- id: exact-1
+  category: exact_id
+  query: "What is the output torque of 761A00-11300000/A?"
+  expected: ["761A00-11300000/A"]
+
+- id: exact-2
+  category: exact_id
+  query: "Specs for 765Y30-11320000/A"
+  expected: ["765Y30-11320000/A"]
+
+- id: exact-3
+  category: exact_id
+  query: "763C00-11330C00/A full load current"
+  expected: ["763C00-11330C00/A"]
+
+- id: exact-4
+  category: exact_id
+  query: "How much power does the 766B00-11320000/A draw?"
+  expected: ["766B00-11320000/A"]
+
+- id: exact-5
+  category: exact_id
+  query: "operating speed of 762Y30-11370000/A"
+  expected: ["762Y30-11370000/A"]
+
+- id: variant-lowercase
+  category: id_variant
+  query: "torque for 761b00-11320000/a"
+  expected: ["761B00-11320000/A"]
+
+- id: variant-no-separators
+  category: id_variant
+  query: "764B0011320000A locked rotor current"
+  expected: ["764B00-11320000/A"]
+
+- id: variant-missing-suffix
+  category: id_variant
+  query: "duty cycle of 763X30-11380000"
+  expected: ["763X30-11380000/A"]
+
+- id: variant-spaces
+  category: id_variant
+  query: "765B00 11300000 A speed"
+  expected: ["765B00-11300000/A"]
+
+- id: typo-missing-digit
+  category: id_typo
+  query: "761A00-1130000/A torque"
+  expected: ["761A00-11300000/A"]
+
+- id: typo-wrong-suffix
+  category: id_typo
+  query: "762B00-11300000/B"
+  expected: ["762B00-11300000/A"]
+
+- id: partial-model-wp
+  category: partial_id
+  query: "Tell me about the 761A"
+  expected_where: "model_code = '761A'"
+
+- id: partial-model-xp
+  category: partial_id
+  query: "764X30 actuator"
+  expected_where: "model_code = '764X'"
+
+- id: partial-3ph-na
+  category: partial_id
+  query: "761B three phase 220V"
+  expected: ["761B00-11330C00/A"]
+
+- id: req-xp-220-mod-1000
+  category: requirements
+  query: "explosionproof actuator, 220V single phase, modulating, at least 1000 in-lbs"
+  expected_where: "enclosure = 'explosionproof' AND voltage_v = 220 AND mod_torque_inlb >= 1000"
+
+- id: req-wp-110-onoff-5000
+  category: requirements
+  query: "weatherproof 110V on/off actuator with 5000 in-lbs of torque"
+  expected_where: "enclosure = 'weatherproof' AND voltage_v = 110 AND onoff_torque_inlb >= 5000"
+
+- id: req-24v-dc-mod-hazardous
+  category: requirements
+  query: "24V DC modulating actuator for a hazardous area"
+  expected_where: "source_table_id = 'xp_24v_dc_mod'"
+
+- id: req-3ph-1000nm
+  category: requirements
+  query: "three phase 220V actuator with 1000 Nm"
+  expected_where: "phase = 3 AND general_torque_nm >= 1000"
+
+- id: req-hazardous-110
+  category: requirements
+  query: "I need an actuator for a location with flammable gas, 110V single phase"
+  expected_where: "enclosure = 'explosionproof' AND voltage_v = 110"
+
+- id: req-max-torque
+  category: requirements
+  query: "which is the actuator with the highest torque available?"
+  expected: ["767C00-11320000/A"]
+
+- id: req-15w-220
+  category: requirements
+  query: "low power 15 W actuator for 220V"
+  expected_where: "motor_power_w = 15 AND voltage_v = 220"
+
+- id: req-fast-110
+  category: requirements
+  query: "110V actuator that turns in under 20 seconds at 60 Hz"
+  expected_where: "voltage_v = 110 AND speed_60hz_s < 20"
+
+- id: req-es-xp-24-onoff
+  category: requirements
+  query: "actuador a prueba de explosión 24V on/off"
+  expected_where: "source_table_id = 'xp_24v_acdc_onoff'"
+
+- id: req-not-csa
+  category: requirements
+  query: "Which actuators are not CSA certified?"
+  expected_where: "NOT csa_certified"
+
+- id: none-summary-example
+  category: no_answer
+  # Example from series_76_summary.pdf: it does NOT exist in the tables (invalid part number).
+  query: "761A00-11380000/A"
+  expected: []
+
+- id: none-480v
+  category: no_answer
+  query: "480V three phase actuator"
+  expected: []
+
+- id: none-100k-torque
+  category: no_answer
+  query: "actuator with 100,000 in-lbs of torque"
+  expected: []
