@@ -9,7 +9,7 @@ Base Part Number) and recommends models based on requirements. Full spec in
 - **The numbers the user sees always come from the DB, never from the LLM.** Retrieval returns
   `base_part_number` values; the technical data is then read from `actuator_flat`.
 - **Retrieval decision: approach B (structured + fuzzy ID) is the primary path.** The agent uses the
-  tools in `backend/app/retrieval/tools.py` (`lookup_actuator`, `search_actuators`). Approach A (hybrid)
+  tools in `backend/app/agent/tools.py` (`lookup_actuator`, `search_actuators`). Approach A (hybrid)
   is kept only as an optional fallback; don't add new features to A without a reason.
 - The only source of truth for the numbers is `docs/data/series_76_electric_data.pdf`
   (4 pages, 7 tables **as images**, 68 part numbers).
@@ -23,11 +23,14 @@ Base Part Number) and recommends models based on requirements. Full spec in
 2b. ✅ DB created and populated (see "Database state").
 3. ✅ Retrieval: approaches **A (hybrid BM25 + dense)** and **B (structured + fuzzy ID)** implemented and compared
    (`docs/retrieval_eval.md`). **Decision (2026-11-03): B is the primary path**; A is an optional fallback.
-4. ⏳ Backend API (FastAPI + LangChain) and mobile app (Kotlin + Compose): **out of scope for now**.
+4. ✅ Backend: API contract (`docs/api_contract.md`), LangChain agent (`backend/app/agent/`), login (JWT),
+   separate debug endpoint, persisted multi-turn, Docker. See "Backend".
+5. ⏳ Mobile app (Kotlin + Compose): next phase.
 
 ## Layout
 ```
-docker-compose.yml        # db service (pgvector/pgvector:pg17)
+docker-compose.yml        # db (pgvector/pgvector:pg17) + backend (port ${BACKEND_PORT}, default 8000)
+.dockerignore
 .env.example              # copy to .env
 data/interim/             # intermediate artifacts (PNGs, Gemini cache). gitignored
 data/processed/           # reviewed .md + actuators.json (committed, ingestion source)
@@ -35,9 +38,16 @@ backend/                  # Python project (uv)
   app/config.py           # settings from env
   app/schemas/actuator.py # Pydantic domain models
   app/db/                 # SQLAlchemy models + session
-  app/retrieval/          # A: lexical.py, dense.py, hybrid.py (RRF) · B: structured.py, tools.py (LangChain)
+  app/retrieval/          # A: lexical.py, dense.py, hybrid.py (RRF) · B: structured.py
   app/llm.py              # ChatOpenAI via OpenRouter (AGENT_MODEL)
-  alembic/                # migrations (schema + actuator_flat view)
+  app/main.py             # FastAPI app
+  app/api/                # schemas.py (CONTRACT), deps.py, errors.py, routes/{auth,conversation,sessions,debug,health}.py
+  app/agent/              # AGENT: graph.py, prompts.py, tools.py, schemas.py, service.py, history.py,
+                          #        products.py, grounding.py, tracing.py
+  app/auth/               # security.py (argon2 + JWT), seed.py (test users)
+  alembic/                # migrations: 0001 catalog + actuator_flat view · 0002 users/sessions/messages/traces
+  Dockerfile, docker/entrypoint.sh   # migrations → seed → ingest if empty → uvicorn
+  scripts/smoke_conversation.py      # multi-turn smoke test against the real LLM (< USD 0.02)
   pipeline/               # extraction, parsing, validation, ingestion, index, eval
     prompts/extract_tables.md   # extraction prompt (fixed column vocabulary)
     eval/retrieval_cases.yaml   # retrieval eval set (shared by approaches A and B)
@@ -57,8 +67,15 @@ uv run python -m pipeline.ingest --from-md # md -> actuators.json -> validate ->
 uv run python -m pipeline.build_index      # search documents + embeddings (OPENROUTER_API_KEY)
 uv run python -m pipeline.build_index --no-embeddings   # lexical only, no key
 uv run python -m pipeline.eval_retrieval   # A (lexical/dense/hybrid) vs B (structured) metrics
-uv run pytest
+uv run python -m app.auth.seed             # test users (idempotent)
+uv run uvicorn app.main:app --port 8001 --reload   # local API (8000 is taken by Coolify on this machine)
+uv run pytest                              # 36 tests (API with a fake agent: no LLM cost)
+uv run python scripts/smoke_conversation.py --base-url http://localhost:8001   # real agent (spends OpenRouter)
+
+# Full Docker (from the repo root)
+docker compose up -d --build               # API at http://localhost:${BACKEND_PORT}/docs
 ```
+Note: `pkill -f "uvicorn …"` kills the shell itself if the pattern appears in the same command; use `ss -ltnp` + `kill <pid>`.
 Ingestion (`ingest --from-md`) **does not need API keys**: it starts from the reviewed `.md`.
 
 ## Data model
@@ -74,14 +91,48 @@ Ingestion (`ingest --from-md`) **does not need API keys**: it starts from the re
   not an "invalid part number"); sizes 6 and 7 (`766*`, `767*`) **not CSA certified**.
 
 ## Database state (verified 2026-11-03)
-- Container `konecto-db` (`pgvector/pgvector:pg17`), persistent volume `konecto_pgdata`, migration `0001` applied,
-  extensions `vector` + `pg_trgm`.
+- Container `konecto-db` (`pgvector/pgvector:pg17`), persistent volume `konecto_pgdata`, migrations `0001` + `0002`
+  applied, extensions `vector` + `pg_trgm`. Container `konecto-backend` on port 8001 (`BACKEND_PORT` in `.env`).
+- Conversations: `app_user` (2 test users), `chat_session`, `chat_message`, `message_trace`.
 - Data loaded from the reviewed `data/processed/series_76_electric_data.md` (identical to `actuators.json`):
   `source_table` 7 · `actuator` 68 (4 N/A, 5 not CSA) · `actuator_rating` 111 · `actuator_electrical` 118 ·
   `search_document` 78 (68 actuators + 10 context, all with embeddings `openai/text-embedding-3-small`).
 - The volume survives `docker compose down`; it is lost with `docker compose down -v`. To recreate it:
   `docker compose up -d db && cd backend && uv run python -m pipeline.ingest --from-md --with-index`
   (`--with-index` is only needed for approach A; B only uses the tables + `actuator_flat`).
+
+## Backend
+
+### API (contract: `docs/api_contract.md`, code: `backend/app/api/schemas.py`, OpenAPI at `/docs`)
+| | Method | Path | Auth |
+|---|---|---|---|
+| Required | POST | `/api/conversation` (`session_id?`, `query`, `client_message_id?`) | Bearer |
+| Suggested | GET | `/api/sessions?limit&offset` | Bearer |
+| Suggested | GET | `/api/sessions/{id}/messages` | Bearer |
+| Login | POST | `/api/auth/login` · GET `/api/auth/me` | — / Bearer |
+| Debug | GET | `/api/messages/{message_id}/debug` (only if `DEBUG_API_ENABLED=true`) | Bearer |
+| Health | GET | `/api/health` | — |
+- `status` of the answer: `answered | clarification_needed | not_found | no_match | data_unavailable | out_of_scope`.
+- `products[]` = `ProductCard` built **from the DB** (`agent/products.py`), never from the LLM; `role` match/alternative.
+- Unknown `session_id` → created with that id (offline-first app). Another user's → 404. `client_message_id` = idempotency.
+- Errors: `{"error": {"code", "message"}}` (`api/errors.py`).
+- **Test users** (`app/auth/seed.py`): `ana@konecto.test` and `luis@konecto.test`, password `Series76!demo`.
+
+### Agent chain flow (`app/agent/service.py::run_turn`)
+1. JWT → user · 2. idempotency (`client_message_id`) · 3. session get/create + user message (persisted before the LLM)
+4. history: last `HISTORY_TURNS` (Human, AI) pairs **without** tool results + a `<conversation_context>` block in the
+   current message with the referenced/suggested parts (follow-ups query the DB again)
+5. `create_agent` (LangChain 1.4): `AGENT_MODEL` + tools `lookup_actuator`/`search_actuators` (approach B, `content_and_artifact`)
+   + `ToolStrategy(AgentAnswer)` + `ModelCallLimitMiddleware`/`ToolCallLimitMiddleware` (cost guard)
+6. deterministic post-processing: cards = parts cited ∩ parts that came out of the DB in this turn; numeric
+   **grounding** (`agent/grounding.py`): unverified numbers → 1 correction; context-leak stripping; `no_match` → role alternative
+7. persist answer + `message_trace` (steps with args/result/duration, tokens, latency, grounding) → response.
+- No LangGraph checkpointer: the history lives in our own tables (`chat_message`), which the API also needs.
+- Smoke test against the real LLM (2026-11-03): 8/8 expected statuses; ~9.5k input tokens per simple turn (~USD 0.001).
+  Persistence verified with `docker restart konecto-backend` + follow-up. Startup from an empty DB verified
+  (migrations + seed + ingest with no keys).
+- Known limitations: grounding validates that the number exists in the data, not which field it belongs to (the cards are the
+  truth); the `search_document` index (approach A) is not rebuilt automatically in Docker (it needs embeddings, and B doesn't use it).
 
 ## Retrieval
 

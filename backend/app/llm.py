@@ -18,4 +18,6 @@ def get_chat_model() -> ChatOpenAI:
         api_key=s.openrouter_api_key,
         temperature=0,
         max_tokens=1024,
+        timeout=s.agent_timeout_s,
+        max_retries=2,  # transient OpenRouter errors (429/5xx)
     )

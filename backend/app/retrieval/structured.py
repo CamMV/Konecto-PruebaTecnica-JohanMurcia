@@ -1,6 +1,6 @@
 """Approach B: structured retrieval + fuzzy part-number matching.
 
-Two operations, designed to be exposed as tools to the LLM (see app/retrieval/tools.py):
+Two operations, designed to be exposed as tools to the LLM (see app/agent/tools.py):
 
 1. `lookup_part_number(text)`: normalizes the part number and resolves it in cascade:
      exact  -> normalized ID identical

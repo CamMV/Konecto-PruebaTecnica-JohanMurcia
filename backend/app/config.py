@@ -25,6 +25,17 @@ class Settings(BaseSettings):
     # Agent model (tool calling). Also used by the approach B eval to pick the tool and its arguments.
     agent_model: str = "anthropic/claude-haiku-5.5"
 
+    agent_max_model_calls: int = 6  # LLM calls per turn (cost guard)
+    agent_max_tool_calls: int = 5  # tool calls per turn
+    agent_timeout_s: int = 60
+    history_turns: int = 8  # previous turns sent to the agent
+
+    # --- API / auth
+    jwt_secret: str = "dev-only-change-me"
+    jwt_expire_minutes: int = 1440
+    debug_api_enabled: bool = True
+    cors_origins: str = "*"
+
     # "openrouter" (default, any embedding model on OpenRouter) or "google" (Gemini, free tier).
     embedding_provider: str = "openrouter"
     embedding_model: str = "openai/text-embedding-3-small"

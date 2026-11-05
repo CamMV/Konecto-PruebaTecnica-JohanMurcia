@@ -10,7 +10,7 @@ Over `no_answer` cases:
     B abstains when lookup gives fuzzy/none or the search comes back empty).
 
 Mode `structured` (approach B): the LLM (AGENT_MODEL, via OpenRouter) receives the query and
-the tools from app/retrieval/tools.py and picks ONE tool with its arguments (tool calling,
+the tools from app/agent/tools.py and picks ONE tool with its arguments (tool calling,
 like the agent will). Tool calls are cached in data/interim/eval_cache/ so re-runs cost nothing.
 In `fuzzy` lookups the suggestions count for hit@k ("did you mean…?" is correct for a typo),
 but the case counts as an abstention (the part number does not exist).
@@ -79,7 +79,7 @@ def route_queries(queries: list[str]) -> dict[str, dict]:
     from langchain_core.utils.function_calling import convert_to_openai_tool
 
     from app.llm import get_chat_model
-    from app.retrieval.tools import TOOLS
+    from app.agent.tools import TOOLS
 
     settings = get_settings()
     schema = json.dumps([convert_to_openai_tool(t) for t in TOOLS], sort_keys=True)

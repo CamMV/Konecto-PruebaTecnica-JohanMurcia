@@ -16,5 +16,21 @@ services:
       timeout: 3s
       retries: 10
 
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: konecto-backend
+    env_file: .env
+    environment:
+      # Inside the compose network the DB is reached through the `db` service (overrides the value in .env).
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-konecto}:${POSTGRES_PASSWORD:-konecto}@db:5432/${POSTGRES_DB:-konecto}
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
   pgdata:

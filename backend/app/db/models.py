@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import uuid
+from datetime import datetime
 from decimal import Decimal
 
 from pgvector.sqlalchemy import Vector
@@ -10,6 +12,7 @@ from sqlalchemy import (
     Boolean,
     CheckConstraint,
     Computed,
+    DateTime,
     ForeignKey,
     Index,
     Integer,
@@ -17,8 +20,9 @@ from sqlalchemy import (
     SmallInteger,
     Text,
     UniqueConstraint,
+    func,
 )
-from sqlalchemy.dialects.postgresql import JSONB, TSVECTOR
+from sqlalchemy.dialects.postgresql import JSONB, TSVECTOR, UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 from app.config import get_settings
@@ -48,6 +52,13 @@ class ActuatorRow(Base):
         CheckConstraint("enclosure IN ('weatherproof', 'explosionproof')", name="ck_actuator_enclosure"),
         CheckConstraint("current_type IN ('ac', 'dc', 'ac_dc')", name="ck_actuator_current_type"),
         CheckConstraint("phase IS NULL OR phase IN (1, 3)", name="ck_actuator_phase"),
+        # Fuzzy part-number search (approach B). Created in migration 0001.
+        Index(
+            "ix_actuator_pn_trgm",
+            "part_number_normalized",
+            postgresql_using="gin",
+            postgresql_ops={"part_number_normalized": "gin_trgm_ops"},
+        ),
     )
 
     base_part_number: Mapped[str] = mapped_column(Text, primary_key=True)
@@ -132,3 +143,71 @@ class SearchDocument(Base):
     )
     embedding: Mapped[list[float] | None] = mapped_column(Vector(EMBEDDING_DIM))
     embedding_model: Mapped[str | None] = mapped_column(Text)
+
+
+# ---------------------------------------------------------------- users & conversations
+
+class AppUser(Base):
+    __tablename__ = "app_user"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    email: Mapped[str] = mapped_column(Text, unique=True)
+    name: Mapped[str] = mapped_column(Text)
+    password_hash: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class ChatSession(Base):
+    __tablename__ = "chat_session"
+    __table_args__ = (Index("ix_chat_session_user_updated", "user_id", "updated_at"),)
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("app_user.id", ondelete="CASCADE"))
+    title: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+    messages: Mapped[list[ChatMessage]] = relationship(
+        back_populates="session", cascade="all, delete-orphan", order_by="ChatMessage.created_at"
+    )
+
+
+class ChatMessage(Base):
+    __tablename__ = "chat_message"
+    __table_args__ = (
+        CheckConstraint("role IN ('user', 'assistant')", name="ck_message_role"),
+        Index("ix_chat_message_session_created", "session_id", "created_at"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    session_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("chat_session.id", ondelete="CASCADE"))
+    role: Mapped[str] = mapped_column(Text)
+    content: Mapped[str] = mapped_column(Text)
+    status: Mapped[str | None] = mapped_column(Text)
+    part_numbers: Mapped[list[str]] = mapped_column(ARRAY(Text), default=list)
+    products: Mapped[list[dict]] = mapped_column(JSONB, default=list)
+    suggestions: Mapped[list[str]] = mapped_column(ARRAY(Text), default=list)
+    # Idempotency: set on the user message; the answer is looked up by reply_to.
+    client_message_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), unique=True)
+    reply_to: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("chat_message.id", ondelete="SET NULL"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+    session: Mapped[ChatSession] = relationship(back_populates="messages")
+
+
+class MessageTrace(Base):
+    """Agent trace per assistant answer (debug screen)."""
+
+    __tablename__ = "message_trace"
+
+    message_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("chat_message.id", ondelete="CASCADE"), primary_key=True
+    )
+    model: Mapped[str] = mapped_column(Text)
+    steps: Mapped[list[dict]] = mapped_column(JSONB, default=list)
+    structured_output: Mapped[dict | None] = mapped_column(JSONB)
+    grounding: Mapped[dict] = mapped_column(JSONB, default=dict)
+    input_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    output_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    latency_ms: Mapped[int] = mapped_column(Integer, default=0)
+    error: Mapped[str | None] = mapped_column(Text)
