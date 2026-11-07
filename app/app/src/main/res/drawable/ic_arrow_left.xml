@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the Figma asset arrow_left.svg (Konecto mockup). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#F3F3F3"
+        android:pathData="M22.0001 12C22.0001 12.553 21.5531 13 21.0001 13H5.4141L10.7071 18.293C11.0981 18.684 11.0981 19.3161 10.7071 19.7071C10.5121 19.9021 10.2561 20 10.0001 20C9.7441 20 9.48813 19.9021 9.29313 19.7071L2.29313 12.7071C1.90213 12.3161 1.90213 11.684 2.29313 11.293L9.29313 4.29301C9.68413 3.90201 10.3161 3.90201 10.7071 4.29301C11.0981 4.68401 11.0981 5.31607 10.7071 5.70707L5.4141 11H21.0001C21.5531 11 22.0001 11.447 22.0001 12Z" />
+</vector>

@@ -25,11 +25,14 @@ Base Part Number) and recommends models based on requirements. Full spec in
    (`docs/retrieval_eval.md`). **Decision (2026-11-03): B is the primary path**; A is an optional fallback.
 4. ✅ Backend: API contract (`docs/api_contract.md`), LangChain agent (`backend/app/agent/`), login (JWT),
    separate debug endpoint, persisted multi-turn, Docker. See "Backend".
-5. ⏳ Mobile app (Kotlin + Compose): next phase.
+5. ✅ Mobile app (Kotlin + Compose, `app/`): Figma mockup implemented, MVVM, offline-first (Room + outbox +
+   WorkManager), runtime-changeable backend URL. Verified on the `Pixel_9` emulator (API 37) against the real backend.
+   See "Mobile app".
 
 ## Layout
 ```
 docker-compose.yml        # db (pgvector/pgvector:pg17) + backend (port ${BACKEND_PORT}, default 8000)
+app/                      # Android app (Gradle root, module :app, package com.konecto.series76). See "Mobile app"
 .dockerignore
 .env.example              # copy to .env
 data/interim/             # intermediate artifacts (PNGs, Gemini cache). gitignored
@@ -45,7 +48,7 @@ backend/                  # Python project (uv)
   app/agent/              # AGENT: graph.py, prompts.py, tools.py, schemas.py, service.py, history.py,
                           #        products.py, grounding.py, tracing.py
   app/auth/               # security.py (argon2 + JWT), seed.py (test users)
-  alembic/                # migrations: 0001 catalog + actuator_flat view · 0002 users/sessions/messages/traces
+  alembic/                # migrations: 0001 catalog + actuator_flat view · 0002 users/sessions/messages/traces · 0003 app_user.is_admin
   Dockerfile, docker/entrypoint.sh   # migrations → seed → ingest if empty → uvicorn
   scripts/smoke_conversation.py      # multi-turn smoke test against the real LLM (< USD 0.02)
   pipeline/               # extraction, parsing, validation, ingestion, index, eval
@@ -69,8 +72,13 @@ uv run python -m pipeline.build_index --no-embeddings   # lexical only, no key
 uv run python -m pipeline.eval_retrieval   # A (lexical/dense/hybrid) vs B (structured) metrics
 uv run python -m app.auth.seed             # test users (idempotent)
 uv run uvicorn app.main:app --port 8001 --reload   # local API (8000 is taken by Coolify on this machine)
-uv run pytest                              # 36 tests (API with a fake agent: no LLM cost)
+uv run pytest                              # 38 tests (API with a fake agent: no LLM cost)
 uv run python scripts/smoke_conversation.py --base-url http://localhost:8001   # real agent (spends OpenRouter)
+
+# Mobile app (from app/; needs local.properties with sdk.dir=/home/milo/Android/Sdk)
+./gradlew :app:testDebugUnitTest           # 17 JVM tests (Robolectric + Room in memory + MockWebServer, no LLM)
+./gradlew :app:assembleDebug               # app/app/build/outputs/apk/debug/app-debug.apk
+~/Android/Sdk/emulator/emulator -avd Pixel_9 &   # then: adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 # Full Docker (from the repo root)
 docker compose up -d --build               # API at http://localhost:${BACKEND_PORT}/docs
@@ -109,14 +117,17 @@ Ingestion (`ingest --from-md`) **does not need API keys**: it starts from the re
 | Required | POST | `/api/conversation` (`session_id?`, `query`, `client_message_id?`) | Bearer |
 | Suggested | GET | `/api/sessions?limit&offset` | Bearer |
 | Suggested | GET | `/api/sessions/{id}/messages` | Bearer |
+| Extra | DELETE | `/api/sessions/{id}` (204; 404 if missing/another user's) — mobile "Delete Chat" | Bearer |
 | Login | POST | `/api/auth/login` · GET `/api/auth/me` | — / Bearer |
-| Debug | GET | `/api/messages/{message_id}/debug` (only if `DEBUG_API_ENABLED=true`) | Bearer |
+| Debug | GET | `/api/messages/{message_id}/debug` (only if `DEBUG_API_ENABLED=true`) | Bearer **admin** (else 403 `ADMIN_REQUIRED`) |
 | Health | GET | `/api/health` | — |
 - `status` of the answer: `answered | clarification_needed | not_found | no_match | data_unavailable | out_of_scope`.
 - `products[]` = `ProductCard` built **from the DB** (`agent/products.py`), never from the LLM; `role` match/alternative.
 - Unknown `session_id` → created with that id (offline-first app). Another user's → 404. `client_message_id` = idempotency.
 - Errors: `{"error": {"code", "message"}}` (`api/errors.py`).
-- **Test users** (`app/auth/seed.py`): `ana@konecto.test` and `luis@konecto.test`, password `Series76!demo`.
+- **Test users** (`app/auth/seed.py`): `ana@konecto.test` (**admin**) and `luis@konecto.test` (regular), password
+  `Series76!demo`. Roles: `app_user.is_admin`, returned as `user.is_admin` by login and `/auth/me`; only admins can read
+  debug traces. The seed (run on every container start) keeps the flag of these two users in sync.
 
 ### Agent chain flow (`app/agent/service.py::run_turn`)
 1. JWT → user · 2. idempotency (`client_message_id`) · 3. session get/create + user message (persisted before the LLM)
@@ -133,6 +144,56 @@ Ingestion (`ingest --from-md`) **does not need API keys**: it starts from the re
   (migrations + seed + ingest with no keys).
 - Known limitations: grounding validates that the number exists in the data, not which field it belongs to (the cards are the
   truth); the `search_document` index (approach A) is not rebuilt automatically in Docker (it needs embeddings, and B doesn't use it).
+
+## Mobile app (`app/`, phase 5)
+- **Stack**: AGP 9.3.2 (built-in Kotlin) + Kotlin 2.4.21, Gradle 9.5.0, Compose BOM 2026.09, Hilt 2.60.1 (KSP), Room 2.8.5,
+  DataStore, Retrofit 3 + kotlinx.serialization, OkHttp 5, WorkManager, Navigation (type-safe routes), minSdk 26,
+  target/compileSdk 37. Versions in `app/gradle/libs.versions.toml`. Note: KSP doesn't see the
+  `Foo.serializer()` generated by the serialization plugin → use `serializer<Foo>()`.
+- **Design**: Figma `wmu4AarVO4gIBiFvuwDsRM` (Login, Motion transition, Chat list, Delete sheet, Conversation, 3 Debug
+  screens). Tokens in `ui/theme/Theme.kt` (Poppins in `res/font`). Icons/logo = Figma SVGs converted to VectorDrawables
+  (`res/drawable`; the logo and the transition glyphs are Y-flipped in Figma). The purple bubble background is the Figma
+  shader "Burbujas violetas" ported to AGSL (`ui/components/background/`, API 33+) with the same math on the CPU
+  (bitmap rendered in parallel stripes on `Dispatchers.Default`) for API 26–32. Message bubbles / product cards are
+  not in the mockup: designed with the same tokens.
+- **Architecture (MVVM)**: `domain/` (models + repository interfaces) · `data/` (remote, local Room + DataStore,
+  connectivity, repository impls, mappers) · `sync/` (outbox) · `ui/feature/*` (Screen stateless + ViewModel with
+  `StateFlow<UiState>`). Text-field values live in Compose `mutableStateOf` inside the ViewModels (a StateFlow round
+  trip drops keystrokes).
+- **Offline-first**: Room is the single source of truth (cache-then-network: screens observe Room, `refresh*` update it).
+  Sending writes a PENDING message (and a PENDING_CREATE session with a client UUID, which the backend accepts); the
+  `OutboxProcessor` (Mutex, sequential, `client_message_id` = idempotent) is triggered right away, on reconnection
+  (`NetworkMonitor` callback) and by a unique `OutboxWorker` (CONNECTED constraint, survives process death).
+  Network error → stays PENDING; 5xx → FAILED + "tap to retry". Deletions: PENDING_DELETE, DELETE later (404 = done).
+- **Backend URL**: runtime state in DataStore, rewritten per request by `BaseUrlInterceptor` (Retrofit built once).
+  Editable from Login (⚙) and Debug; "Test" calls `/api/health`; saving a different URL logs out and clears the cache.
+  Default `http://10.0.2.2:8001/` (`BuildConfig.DEFAULT_BASE_URL`, emulator → host).
+- **Android 17**: apps targeting 37 need `ACCESS_LOCAL_NETWORK` (runtime, "Nearby devices" dialog) to reach
+  10.0.2.2/192.168.x.x; requested at startup (`ui/LocalNetworkPermission.kt`). Without it: connect timeout.
+- **Verified on the emulator (2026-11-05)**: login → transition → list; new chat + product card; offline follow-up
+  (banner, "Waiting for connection") sent automatically on reconnection with the right multi-turn answer; message
+  sent by WorkManager after killing the process; swipe → Delete sheet → `DELETE` 204; Debug chat → answer → trace.
+- **Navigation**: `navigateFrom(entry, …)` / `backFrom(entry)` in `KonectoNavHost.kt` only act if that entry is the top of
+  the back stack (+ `launchSingleTop`), so double taps and the Transition's tap-vs-end race never push a screen twice.
+  Slide transitions (forward/back) over **one shared `BubbleBackground(Main)`** drawn behind the `NavHost`; Login and
+  Transition draw their own opaque background and cross-fade. Chats/Conversation/Debug screens don't draw a background.
+- **Landscape**: `MainActivity` handles `configChanges` (no recreation on rotation). `ui/components/Adaptive.kt`:
+  `isLandscape()` + `Modifier.screenInsets()` (= `safeDrawingPadding`: bars + cutout + IME on every side). Login:
+  logo | form; Chats: side pane (header + buttons) | list; Conversation/Debug: centered column ≤ 720dp.
+  Verified on `Pixel_9` (2026-11-06), including rotating mid-Transition (it resumes, doesn't restart).
+- **Roles**: `User.isAdmin` is stored in DataStore at login and refreshed from `/auth/me` at startup (`validateToken`);
+  the Debug button in Chats is shown only to admins (the backend enforces it with 403). Login has a show/hide password
+  button (`ic_eye` / `ic_eye_off`). Verified on `Pixel_9` (2026-11-06): Luis has no Debug button, Ana opens a full trace.
+- **Cards (Figma refresh 2026-11-06)**: list cards = elliptical radial gradient (`Modifier.radialGlow(CardGlow)`,
+  3 `CardGlows` presets cycled per row) + white 9 % border; suggestion cards = `SuggestionGlow` + `#3A3060` border +
+  purple shadow. Delete = **full swipe only** (`SwipeToDelete`: past 50 % of the width or a fast fling → card slides
+  off → confirmation sheet; cancel slides it back; no half-open button). Confirmed ids are hidden at once in
+  `ChatsViewModel` (`removed`) so the card never bounces back before Room drops it.
+- **Chat bar** (`ChatInput`): variant "C · Glow", picked from a Claude Design exploration of 3 variants
+  (https://claude.ai/artifact/PtoGjkXz7TwpYHUAu5LPra). Same radial fill + `#3A3060` border as the suggestion cards;
+  on focus the border turns into a gradient and the purple shadow grows. Gradient send button, dimmed to 40 % when
+  the field is empty. The button stays at the bottom when the text runs to several lines.
+- **Pending**: the CPU fallback of the shader is unit-tested but not run on a real API < 33 device; no instrumented UI tests.
 
 ## Retrieval
 

@@ -20,9 +20,10 @@ Source of truth in code: `backend/app/api/schemas.py`. Interactive OpenAPI at `h
 | **Required** | POST | `/api/conversation` | ✅ | Send a query; creates or continues a conversation |
 | Suggested | GET | `/api/sessions` | ✅ | List of the user's conversations |
 | Suggested | GET | `/api/sessions/{session_id}/messages` | ✅ | History to resume a conversation |
+| Extra | DELETE | `/api/sessions/{session_id}` | ✅ | Delete a conversation (mobile "Delete Chat") |
 | Suggested (login) | POST | `/api/auth/login` | — | Email + password → token |
 | Extra | GET | `/api/auth/me` | ✅ | Validate a saved token (app startup) |
-| Extra (debug) | GET | `/api/messages/{message_id}/debug` | ✅ | Trace of an answer for the debug screen |
+| Extra (debug) | GET | `/api/messages/{message_id}/debug` | ✅ admin | Trace of an answer for the debug screen |
 | Extra | GET | `/api/health` | — | Service and DB status |
 
 Changes compared with the assessment's suggestion (justified in the README):
@@ -31,6 +32,8 @@ Changes compared with the assessment's suggestion (justified in the README):
 - Debug is a **separate** endpoint: the chat response never carries internal data (tool names, parameters).
 - `client_message_id` in `POST /api/conversation`: idempotency for retries with intermittent connectivity.
 - `/api/auth/me` and `/api/health` added.
+- `DELETE /api/sessions/{id}` added (the app's "Delete Chat" action).
+- Roles: `user.is_admin`. Only administrators can read debug traces (the app shows the Debug button only to them).
 
 ---
 
@@ -43,13 +46,13 @@ Changes compared with the assessment's suggestion (justified in the README):
   "access_token": "eyJhbGciOi...",
   "token_type": "bearer",
   "expires_in": 86400,
-  "user": { "id": "7b0e…", "email": "ana@konecto.test", "name": "Ana Torres" }
+  "user": { "id": "7b0e…", "email": "ana@konecto.test", "name": "Ana Torres", "is_admin": true }
 }
 ```
 Errors: `401 INVALID_CREDENTIALS`, `422 VALIDATION_ERROR`.
 
 ## GET /api/auth/me
-`200` → `{ "id", "email", "name" }` · `401 UNAUTHORIZED` if the token is missing, invalid or expired.
+`200` → `{ "id", "email", "name", "is_admin" }` (the app refreshes the role with it at startup) · `401 UNAUTHORIZED` if the token is missing, invalid or expired.
 
 ## POST /api/conversation
 ```json
@@ -149,9 +152,14 @@ Sorted by `updated_at` descending. `title` = first query (60 characters max).
 ```
 Errors: `404 SESSION_NOT_FOUND` (it doesn't exist or belongs to another user).
 
+## DELETE /api/sessions/{session_id}
+Deletes the conversation with its messages and debug traces. `204` with no body.
+Errors: `404 SESSION_NOT_FOUND` (it doesn't exist, was already deleted, or belongs to another user). The mobile app
+treats `404` as success when it syncs an offline deletion.
+
 ## GET /api/messages/{message_id}/debug
-For the **developer** debug screen. It requires `DEBUG_API_ENABLED=true` on the backend (otherwise `503 DEBUG_DISABLED`)
-and that the message belongs to the user.
+For the debug screen, **administrators only** (`user.is_admin`, otherwise `403 ADMIN_REQUIRED`). It requires
+`DEBUG_API_ENABLED=true` on the backend (otherwise `503 DEBUG_DISABLED`) and that the message belongs to the user.
 ```json
 {
   "message_id": "9a8b…",
@@ -174,7 +182,7 @@ and that the message belongs to the user.
   "error": null
 }
 ```
-Errors: `404 MESSAGE_NOT_FOUND`, `503 DEBUG_DISABLED`.
+Errors: `403 ADMIN_REQUIRED`, `404 MESSAGE_NOT_FOUND`, `503 DEBUG_DISABLED`.
 
 ## GET /api/health
 `200` → `{ "status": "ok", "db": true, "actuators": 68 }` · `status: "degraded"` if the DB doesn't respond.

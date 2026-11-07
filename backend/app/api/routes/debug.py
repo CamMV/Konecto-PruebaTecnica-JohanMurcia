@@ -2,7 +2,7 @@ import uuid
 
 from fastapi import APIRouter
 
-from app.api.deps import DbDep, UserDep
+from app.api.deps import AdminDep, DbDep
 from app.api.errors import ApiError
 from app.api.schemas import DebugStep, DebugTrace, ErrorResponse, Grounding, TokenUsage
 from app.config import get_settings
@@ -12,10 +12,10 @@ router = APIRouter(prefix="/messages", tags=["debug"])
 
 
 @router.get(
-    "/{message_id}/debug", response_model=DebugTrace, responses={c: {"model": ErrorResponse} for c in (404, 503)}
+    "/{message_id}/debug", response_model=DebugTrace, responses={c: {"model": ErrorResponse} for c in (403, 404, 503)}
 )
-def message_debug(message_id: uuid.UUID, db: DbDep, user: UserDep) -> DebugTrace:
-    """Developer-only: tools called, their parameters and the data they returned."""
+def message_debug(message_id: uuid.UUID, db: DbDep, user: AdminDep) -> DebugTrace:
+    """Admin-only (403 otherwise): tools called, their parameters and the data they returned."""
     if not get_settings().debug_api_enabled:
         raise ApiError(503, "DEBUG_DISABLED", "The debug endpoint is disabled")
     msg = db.get(ChatMessage, message_id)

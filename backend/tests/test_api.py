@@ -88,9 +88,11 @@ def users():
     except Exception as exc:  # noqa: BLE001
         pytest.skip(f"DB not available: {exc}")
     tag = uuid.uuid4().hex[:8]
-    emails = [f"test-a-{tag}@konecto.test", f"test-b-{tag}@konecto.test"]
+    emails = [f"test-a-{tag}@konecto.test", f"test-b-{tag}@konecto.test"]  # a = admin, b = regular user
     with SessionLocal.begin() as db:
-        db.add_all(AppUser(email=e, name=e, password_hash=hash_password(PASSWORD)) for e in emails)
+        db.add_all(
+            AppUser(email=e, name=e, password_hash=hash_password(PASSWORD), is_admin=(i == 0)) for i, e in enumerate(emails)
+        )
     yield emails
     with SessionLocal.begin() as db:
         db.execute(delete(AppUser).where(AppUser.email.in_(emails)))  # cascade: sessions, messages, traces
@@ -215,10 +217,41 @@ def test_client_created_session_and_isolation(client, users, agent):
     r = client.post("/api/conversation", json={"session_id": sid, "query": "hi"}, headers=hb)
     assert r.status_code == 404 and r.json()["error"]["code"] == "SESSION_NOT_FOUND"
     msg_id = client.get(f"/api/sessions/{sid}/messages", headers=ha).json()["messages"][1]["id"]
-    assert client.get(f"/api/messages/{msg_id}/debug", headers=hb).status_code == 404
+    assert client.get(f"/api/messages/{msg_id}/debug", headers=hb).status_code == 403  # b is not an admin
+    # The admin, on b's message → 404: admins only see the traces of their own chats.
+    sid_b = client.post("/api/conversation", json={"query": "761A"}, headers=hb).json()["session_id"]
+    msg_b = client.get(f"/api/sessions/{sid_b}/messages", headers=hb).json()["messages"][1]["id"]
+    assert client.get(f"/api/messages/{msg_b}/debug", headers=ha).status_code == 404
+
+
+def test_debug_admin_only(client, users, agent):
+    ha, hb = login(client, users[0]), login(client, users[1])
+    assert client.get("/api/auth/me", headers=ha).json()["is_admin"] is True
+    login_b = client.post("/api/auth/login", json={"email": users[1], "password": PASSWORD}).json()
+    assert login_b["user"]["is_admin"] is False
+    # The regular user can chat and list their history...
+    r = client.post("/api/conversation", json={"query": "761A00-11300000/A"}, headers=hb).json()
+    assert client.get(f"/api/sessions/{r['session_id']}/messages", headers=hb).status_code == 200
+    # ...but not read the debug trace, not even of their own answer.
+    d = client.get(f"/api/messages/{r['message_id']}/debug", headers=hb)
+    assert d.status_code == 403 and d.json()["error"]["code"] == "ADMIN_REQUIRED"
+    # Unknown message: still 403 for a regular user (no hint about which ids exist).
+    assert client.get(f"/api/messages/{uuid.uuid4()}/debug", headers=hb).status_code == 403
 
 
 def test_debug_disabled(client, users, agent, monkeypatch):
     monkeypatch.setattr(get_settings(), "debug_api_enabled", False)
     r = client.get(f"/api/messages/{uuid.uuid4()}/debug", headers=login(client, users[0]))
     assert r.status_code == 503 and r.json()["error"]["code"] == "DEBUG_DISABLED"
+
+
+def test_delete_session(client, users, agent):
+    ha, hb = login(client, users[0]), login(client, users[1])
+    sid = client.post("/api/conversation", json={"query": "761A00-11300000/A"}, headers=ha).json()["session_id"]
+    # Another user's session → 404 and it is not deleted.
+    r = client.delete(f"/api/sessions/{sid}", headers=hb)
+    assert r.status_code == 404 and r.json()["error"]["code"] == "SESSION_NOT_FOUND"
+    assert client.delete(f"/api/sessions/{sid}", headers=ha).status_code == 204
+    assert client.get(f"/api/sessions/{sid}/messages", headers=ha).status_code == 404
+    assert sid not in [s["id"] for s in client.get("/api/sessions", headers=ha).json()["items"]]
+    assert client.delete(f"/api/sessions/{sid}", headers=ha).status_code == 404  # already gone

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the Figma asset send.svg (Konecto mockup). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M21.4209 5.66912L18.1409 18.7892C17.6709 20.6592 16.0709 21.4992 14.6709 21.4992C14.6609 21.4992 14.6509 21.4992 14.6509 21.4992C13.2409 21.4892 11.6309 20.6292 11.1909 18.7392L10.3309 15.0893L15.7109 9.70916C16.1009 9.31916 16.1009 8.67924 15.7109 8.28924C15.3209 7.89924 14.6809 7.89924 14.2909 8.28924L8.91085 13.6691L5.26089 12.8093C3.37089 12.3693 2.51088 10.7593 2.50088 9.35931C2.49088 7.94931 3.3309 6.32931 5.2109 5.85931L18.3309 2.57928C19.2009 2.35928 20.1109 2.6092 20.7509 3.2492C21.3909 3.8892 21.6409 4.79912 21.4209 5.66912Z" />
+</vector>

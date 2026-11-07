@@ -56,6 +56,7 @@ class UserOut(_Out):
     id: UUID
     email: str
     name: str
+    is_admin: bool = Field(description="Can open the debug screens (GET /api/messages/{id}/debug)")
 
 
 class LoginResponse(BaseModel):

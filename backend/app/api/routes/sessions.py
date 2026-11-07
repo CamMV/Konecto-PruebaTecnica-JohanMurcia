@@ -1,7 +1,7 @@
 import uuid
 
-from fastapi import APIRouter, Query
-from sqlalchemy import func, select
+from fastapi import APIRouter, Query, Response
+from sqlalchemy import delete, func, select
 
 from app.api.deps import DbDep, UserDep
 from app.api.errors import ApiError
@@ -71,3 +71,14 @@ def session_messages(session_id: uuid.UUID, db: DbDep, user: UserDep) -> Session
             for m in session.messages
         ],
     )
+
+
+@router.delete("/{session_id}", status_code=204, responses={404: {"model": ErrorResponse}})
+def delete_session(session_id: uuid.UUID, db: DbDep, user: UserDep) -> Response:
+    """Deletes the conversation with its messages and traces (DB cascades)."""
+    session = db.get(ChatSession, session_id)
+    if session is None or session.user_id != user.id:
+        raise ApiError(404, "SESSION_NOT_FOUND", "Session not found")
+    db.execute(delete(ChatSession).where(ChatSession.id == session_id))
+    db.commit()
+    return Response(status_code=204)

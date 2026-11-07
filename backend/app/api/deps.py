@@ -1,4 +1,4 @@
-"""FastAPI dependencies: DB session, authenticated user, agent (overridable in tests)."""
+"""FastAPI dependencies: DB session, authenticated user (and admin), agent (overridable in tests)."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 
-from app.api.errors import unauthorized
+from app.api.errors import ApiError, unauthorized
 from app.auth.security import decode_access_token
 from app.db.models import AppUser
 from app.db.session import SessionLocal
@@ -35,6 +35,12 @@ def get_current_user(
     return user
 
 
+def get_admin_user(user: Annotated[AppUser, Depends(get_current_user)]) -> AppUser:
+    if not user.is_admin:
+        raise ApiError(403, "ADMIN_REQUIRED", "Only administrators can open the debug data")
+    return user
+
+
 def get_agent() -> Any:
     from app.agent.graph import get_agent as build
 
@@ -43,4 +49,5 @@ def get_agent() -> Any:
 
 DbDep = Annotated[Session, Depends(get_db)]
 UserDep = Annotated[AppUser, Depends(get_current_user)]
+AdminDep = Annotated[AppUser, Depends(get_admin_user)]
 AgentDep = Annotated[Any, Depends(get_agent)]
