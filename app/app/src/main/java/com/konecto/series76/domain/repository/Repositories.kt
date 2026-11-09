@@ -3,6 +3,7 @@ package com.konecto.series76.domain.repository
 import com.konecto.series76.domain.model.AuthSession
 import com.konecto.series76.domain.model.ChatMessage
 import com.konecto.series76.domain.model.ChatSession
+import com.konecto.series76.domain.model.DebugSession
 import com.konecto.series76.domain.model.DebugTrace
 import com.konecto.series76.domain.model.ServerHealth
 import kotlinx.coroutines.flow.Flow
@@ -70,6 +71,15 @@ interface ChatRepository {
 }
 
 interface DebugRepository {
+    /** Every user's chats (admin, GET /api/debug/sessions), newest first. Network only. */
+    suspend fun sessions(): Result<List<DebugSession>>
+
+    /** History of any user's chat (GET /api/debug/sessions/{id}/messages); kept in memory for the detail screen. */
+    suspend fun messages(sessionId: String): Result<List<ChatMessage>>
+
+    /** Last history loaded by [messages] for that chat, if any. */
+    fun cachedMessages(sessionId: String): List<ChatMessage>?
+
     /** Cache first (traces are immutable); otherwise GET /api/messages/{id}/debug. */
     suspend fun trace(messageId: String): Result<DebugTrace>
 }

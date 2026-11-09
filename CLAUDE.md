@@ -39,6 +39,9 @@ Base Part Number) and recommends models based on requirements. Full spec in
 ```
 docker-compose.yml        # db (pgvector/pgvector:pg17) + backend (port ${BACKEND_PORT}, default 8001, matches the app default URL; both services `restart: unless-stopped`)
 app/                      # Android app (Gradle root, module :app, package com.konecto.series76). See "Mobile app"
+scripts/check_deployment.sh   # checks a running backend (health, catalog, auth, sessions, debug 200/403); no LLM
+.github/workflows/        # CI: backend.yml (lint, md↔json, ingest, pytest w/o skips) · android.yml (unit tests + APK
+                          #   artifact) · deploy.yml (compose up + check + restart; real-agent job on demand only)
 .dockerignore
 .env.example              # copy to .env
 data/interim/             # intermediate artifacts (PNGs, Gemini cache). gitignored
@@ -78,16 +81,17 @@ uv run python -m pipeline.build_index --no-embeddings   # lexical only, no key
 uv run python -m pipeline.eval_retrieval   # A (lexical/dense/hybrid) vs B (structured) metrics
 uv run python -m app.auth.seed             # test users (idempotent)
 uv run uvicorn app.main:app --port 8001 --reload   # local API (8000 is taken by Coolify on this machine)
-uv run pytest                              # 38 tests (API with a fake agent: no LLM cost)
+uv run pytest                              # 39 tests (API with a fake agent: no LLM cost)
 uv run python scripts/smoke_conversation.py --base-url http://localhost:8001   # real agent (spends OpenRouter)
 
 # Mobile app (from app/; needs local.properties with sdk.dir=/home/milo/Android/Sdk)
-./gradlew :app:testDebugUnitTest           # 17 JVM tests (Robolectric + Room in memory + MockWebServer, no LLM)
+./gradlew :app:testDebugUnitTest           # 21 JVM tests (Robolectric + Room in memory + MockWebServer, no LLM)
 ./gradlew :app:assembleDebug               # app/app/build/outputs/apk/debug/app-debug.apk
 ~/Android/Sdk/emulator/emulator -avd Pixel_9 &   # then: adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 # Full Docker (from the repo root)
 docker compose up -d --build               # API at http://localhost:${BACKEND_PORT}/docs
+scripts/check_deployment.sh http://localhost:8001   # 19 checks against a running backend, no OpenRouter cost
 ```
 Note: `pkill -f "uvicorn …"` kills the shell itself if the pattern appears in the same command; use `ss -ltnp` + `kill <pid>`.
 Ingestion (`ingest --from-md`) **does not need API keys**: it starts from the reviewed `.md`.
@@ -125,7 +129,7 @@ Ingestion (`ingest --from-md`) **does not need API keys**: it starts from the re
 | Suggested | GET | `/api/sessions/{id}/messages` | Bearer |
 | Extra | DELETE | `/api/sessions/{id}` (204; 404 if missing/another user's) — mobile "Delete Chat" | Bearer |
 | Login | POST | `/api/auth/login` · GET `/api/auth/me` | — / Bearer |
-| Debug | GET | `/api/messages/{message_id}/debug` (only if `DEBUG_API_ENABLED=true`) | Bearer **admin** (else 403 `ADMIN_REQUIRED`) |
+| Debug | GET | `/api/debug/sessions` · `/api/debug/sessions/{id}/messages` · `/api/messages/{message_id}/debug` (only if `DEBUG_API_ENABLED=true`) | Bearer **admin** (else 403 `ADMIN_REQUIRED`) |
 | Health | GET | `/api/health` | — |
 - `status` of the answer: `answered | clarification_needed | not_found | no_match | data_unavailable | out_of_scope`.
 - `products[]` = `ProductCard` built **from the DB** (`agent/products.py`), never from the LLM; `role` match/alternative.
@@ -199,6 +203,14 @@ Ingestion (`ingest --from-md`) **does not need API keys**: it starts from the re
   (https://claude.ai/artifact/PtoGjkXz7TwpYHUAu5LPra). Same radial fill + `#3A3060` border as the suggestion cards;
   on focus the border turns into a gradient and the purple shadow grows. Gradient send button, dimmed to 40 % when
   the field is empty. The button stays at the bottom when the text runs to several lines.
+- **Debug = every user's chats** (2026-11-09): admins read all conversations through `/api/debug/sessions…`
+  (`routes/debug.py`, reusing `session_summaries` / `session_messages_out` from `routes/sessions.py`); the trace endpoint
+  no longer checks ownership. App: `DebugRepository.sessions()/messages()` (network only, histories kept in memory for
+  the detail screen; offline fallback to Room for own chats); `groupByUser()` → header per user (logged-in admin
+  first, then by name), "Chat N" numbered per user. The owner's name travels in the `DebugAnswers`/`DebugAnswer` routes.
+  Answers list: card = "<owner>: question" + answer preview (`plainText()` strips Markdown) + date · status; detail
+  adds an "Answer" card under "Question · <owner>". Verified on `Pixel_9`: Ana sees her 17 chats + Luis's 2 and opens
+  Luis's trace.
 - **Pending**: the CPU fallback of the shader is unit-tested but not run on a real API < 33 device; no instrumented UI tests.
 
 ## Retrieval

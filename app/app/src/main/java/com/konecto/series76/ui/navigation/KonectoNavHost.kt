@@ -112,16 +112,18 @@ fun KonectoNavHost(
             composable<Route.DebugChats> { entry ->
                 DebugChatsRoute(
                     onBack = { navController.backFrom(entry) },
-                    onOpenChat = { id, label -> navController.navigateFrom(entry, Route.DebugAnswers(id, label)) },
+                    onOpenChat = { id, label, userName ->
+                        navController.navigateFrom(entry, Route.DebugAnswers(id, label, userName))
+                    },
                     onServerChanged = ::toLogin,
                 )
             }
             composable<Route.DebugAnswers> { entry ->
-                val sessionId = entry.toRoute<Route.DebugAnswers>().sessionId
+                val route = entry.toRoute<Route.DebugAnswers>()
                 DebugAnswersRoute(
                     onBack = { navController.backFrom(entry) },
                     onOpenAnswer = { messageId, title ->
-                        navController.navigateFrom(entry, Route.DebugAnswer(sessionId, messageId, title))
+                        navController.navigateFrom(entry, Route.DebugAnswer(route.sessionId, messageId, title, route.userName))
                     },
                 )
             }

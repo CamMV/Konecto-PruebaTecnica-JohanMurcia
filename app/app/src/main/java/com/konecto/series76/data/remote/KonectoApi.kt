@@ -2,6 +2,7 @@ package com.konecto.series76.data.remote
 
 import com.konecto.series76.data.remote.dto.ConversationRequest
 import com.konecto.series76.data.remote.dto.ConversationResponse
+import com.konecto.series76.data.remote.dto.DebugSessionListDto
 import com.konecto.series76.data.remote.dto.DebugTraceDto
 import com.konecto.series76.data.remote.dto.HealthDto
 import com.konecto.series76.data.remote.dto.LoginRequest
@@ -42,6 +43,12 @@ interface KonectoApi {
 
     @DELETE("api/sessions/{id}")
     suspend fun deleteSession(@Path("id") sessionId: String): Response<Unit>
+
+    @GET("api/debug/sessions")
+    suspend fun debugSessions(@Query("limit") limit: Int = 500, @Query("offset") offset: Int = 0): DebugSessionListDto
+
+    @GET("api/debug/sessions/{id}/messages")
+    suspend fun debugMessages(@Path("id") sessionId: String): SessionMessagesDto
 
     @GET("api/messages/{id}/debug")
     suspend fun debugTrace(@Path("id") messageId: String): DebugTraceDto

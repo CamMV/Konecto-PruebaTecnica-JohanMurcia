@@ -64,6 +64,21 @@ data class SessionSummaryDto(
 @Serializable
 data class SessionListDto(val items: List<SessionSummaryDto>, val total: Int)
 
+/** GET /api/debug/sessions (admin): every user's chats, each with its owner. */
+@Serializable
+data class DebugSessionDto(
+    val id: String,
+    val title: String,
+    @SerialName("created_at") val createdAt: String,
+    @SerialName("updated_at") val updatedAt: String,
+    @SerialName("message_count") val messageCount: Int = 0,
+    @SerialName("last_message_preview") val lastMessagePreview: String? = null,
+    val user: UserDto,
+)
+
+@Serializable
+data class DebugSessionListDto(val items: List<DebugSessionDto>, val total: Int)
+
 @Serializable
 data class MessageDto(
     val id: String,

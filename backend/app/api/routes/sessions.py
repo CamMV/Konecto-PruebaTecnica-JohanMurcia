@@ -2,6 +2,7 @@ import uuid
 
 from fastapi import APIRouter, Query, Response
 from sqlalchemy import delete, func, select
+from sqlalchemy.orm import Session
 
 from app.api.deps import DbDep, UserDep
 from app.api.errors import ApiError
@@ -12,10 +13,10 @@ router = APIRouter(prefix="/sessions", tags=["sessions"])
 PREVIEW_LEN = 120
 
 
-@router.get("", response_model=SessionList)
-def list_sessions(
-    db: DbDep, user: UserDep, limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)
-) -> SessionList:
+def session_summaries(
+    db: Session, user_id: uuid.UUID | None, limit: int, offset: int
+) -> tuple[list[tuple[ChatSession, SessionSummary]], int]:
+    """Sessions newest first, with message count and last-message preview. `user_id=None` = every user (admin debug)."""
     count = (
         select(func.count(ChatMessage.id)).where(ChatMessage.session_id == ChatSession.id).scalar_subquery()
     )
@@ -26,16 +27,15 @@ def list_sessions(
         .limit(1)
         .scalar_subquery()
     )
-    rows = db.execute(
-        select(ChatSession, count, last)
-        .where(ChatSession.user_id == user.id)
-        .order_by(ChatSession.updated_at.desc())
-        .limit(limit)
-        .offset(offset)
-    ).all()
-    total = db.scalar(select(func.count()).select_from(ChatSession).where(ChatSession.user_id == user.id))
-    return SessionList(
-        items=[
+    query = select(ChatSession, count, last)
+    total_q = select(func.count()).select_from(ChatSession)
+    if user_id is not None:
+        query = query.where(ChatSession.user_id == user_id)
+        total_q = total_q.where(ChatSession.user_id == user_id)
+    rows = db.execute(query.order_by(ChatSession.updated_at.desc()).limit(limit).offset(offset)).all()
+    items = [
+        (
+            s,
             SessionSummary(
                 id=s.id,
                 title=s.title,
@@ -43,18 +43,14 @@ def list_sessions(
                 updated_at=s.updated_at,
                 message_count=n,
                 last_message_preview=(p[:PREVIEW_LEN] + "…" if p and len(p) > PREVIEW_LEN else p),
-            )
-            for s, n, p in rows
-        ],
-        total=total,
-    )
+            ),
+        )
+        for s, n, p in rows
+    ]
+    return items, db.scalar(total_q)
 
 
-@router.get("/{session_id}/messages", response_model=SessionMessages, responses={404: {"model": ErrorResponse}})
-def session_messages(session_id: uuid.UUID, db: DbDep, user: UserDep) -> SessionMessages:
-    session = db.get(ChatSession, session_id)
-    if session is None or session.user_id != user.id:
-        raise ApiError(404, "SESSION_NOT_FOUND", "Session not found")
+def session_messages_out(session: ChatSession) -> SessionMessages:
     return SessionMessages(
         session_id=session.id,
         title=session.title,
@@ -71,6 +67,22 @@ def session_messages(session_id: uuid.UUID, db: DbDep, user: UserDep) -> Session
             for m in session.messages
         ],
     )
+
+
+@router.get("", response_model=SessionList)
+def list_sessions(
+    db: DbDep, user: UserDep, limit: int = Query(20, ge=1, le=100), offset: int = Query(0, ge=0)
+) -> SessionList:
+    items, total = session_summaries(db, user.id, limit, offset)
+    return SessionList(items=[summary for _, summary in items], total=total)
+
+
+@router.get("/{session_id}/messages", response_model=SessionMessages, responses={404: {"model": ErrorResponse}})
+def session_messages(session_id: uuid.UUID, db: DbDep, user: UserDep) -> SessionMessages:
+    session = db.get(ChatSession, session_id)
+    if session is None or session.user_id != user.id:
+        raise ApiError(404, "SESSION_NOT_FOUND", "Session not found")
+    return session_messages_out(session)
 
 
 @router.delete("/{session_id}", status_code=204, responses={404: {"model": ErrorResponse}})

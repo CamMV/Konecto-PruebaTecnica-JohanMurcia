@@ -157,7 +157,7 @@ Interactive docs: `http://localhost:8001/docs`.
 | Suggested | GET | `/api/sessions/{id}/messages` | Bearer |
 | Extra | DELETE | `/api/sessions/{id}` | Bearer |
 | Login | POST | `/api/auth/login` · GET `/api/auth/me` | — / Bearer |
-| Debug | GET | `/api/messages/{message_id}/debug` | Bearer, **admin** |
+| Debug | GET | `/api/debug/sessions` · `/api/debug/sessions/{id}/messages` · `/api/messages/{message_id}/debug` | Bearer, **admin** |
 | Health | GET | `/api/health` | — |
 
 The `/api/conversation` response adds to the fixed fields (`session_id`, `answer`):
@@ -173,7 +173,8 @@ Changes compared with the suggested endpoints, and why:
 - `/api/sessions` returns `{items, total}` with `limit`/`offset`: pagination, and each item carries
   `updated_at`, `message_count` and `last_message_preview` for the list screen.
 - `/api/sessions/{id}/messages` returns `products` and `suggestions` too, so a resumed conversation looks the same.
-- Debug is a **separate endpoint**, restricted to admins: the chat response never carries tool names or parameters.
+- Debug uses **separate endpoints**, restricted to admins: the chat response never carries tool names or parameters.
+  Admins see every user's conversations there (the normal session endpoints stay scoped to the caller).
 - `client_message_id` makes sending idempotent (the app retries after connectivity drops).
 - A `session_id` that doesn't exist yet is created with that id, so the app can start conversations offline.
 - `DELETE /api/sessions/{id}`, `/api/auth/me` (validate a saved token, refresh the role) and `/api/health` (the app's
@@ -215,6 +216,14 @@ Start any emulator (API 26+), then `./gradlew :app:installDebug`. The default ba
    ```
    If `adb` isn't on your PATH it's in `<sdk>/platform-tools/adb` (e.g. `~/Android/Sdk/platform-tools/adb`).
    With several devices connected, add `-s <serial>` to the `adb` commands.
+
+   If the install fails with `INSTALL_FAILED_UPDATE_INCOMPATIBLE ... signatures do not match`, the phone already
+   has a copy signed with another key (e.g. a release build). Remove it first; this only clears the local cache and
+   login, since conversations are stored on the backend:
+   ```bash
+   adb uninstall com.konecto.series76
+   adb install app/build/outputs/apk/debug/app-debug.apk
+   ```
 4. Point the app to the backend with one of the two options below.
 
 ### Point the app to the backend
@@ -275,9 +284,12 @@ Notes:
 
 ### Debug screen (developers only)
 - Log in as **`ana@konecto.test`** (admin). A **Debug** button appears on the Chats screen. Regular users
-  (`luis@konecto.test`) don't see it, and the backend answers `403 ADMIN_REQUIRED` if they call the endpoint anyway.
-- Debug → pick a conversation → pick an answer → its trace: every tool call with its parameters, the data it
-  returned and its duration, plus tokens, latency and the numeric grounding result.
+  (`luis@konecto.test`) don't see it, and the backend answers `403 ADMIN_REQUIRED` if they call the endpoints anyway.
+- The Debug screen lists **every user's conversations, grouped by user** (header with name, email, role and chat count;
+  the logged-in admin first). It loads them from the server, so it needs a connection; pull down to refresh.
+- Debug → pick a conversation → its answers, each shown as "<user name>: question" + a preview of the answer +
+  date · status → pick one → the question, the full answer and its trace: every tool call with its parameters, the
+  data it returned and its duration, plus tokens, latency and the numeric grounding result.
 - Server-side kill switch: `DEBUG_API_ENABLED=false` in `.env`.
 
 ## 8. Design and architecture
@@ -357,12 +369,32 @@ Not implemented.
 ## 10. Tests
 
 ```bash
-cd backend && uv run pytest              # 38 tests; API tests use a fake agent (no LLM cost); DB tests skip if Postgres is down
+cd backend && uv run pytest              # 39 tests; API tests use a fake agent (no LLM cost); DB tests skip if Postgres is down
 uv run python -m pipeline.eval_retrieval # retrieval metrics A vs B
 uv run python scripts/smoke_conversation.py --base-url http://localhost:8001   # real agent, 8 scenarios (< USD 0.02)
 
-cd app && ./gradlew :app:testDebugUnitTest   # 17 JVM tests (Robolectric, Room in memory, MockWebServer)
+cd app && ./gradlew :app:testDebugUnitTest   # 21 JVM tests (Robolectric, Room in memory, MockWebServer)
+
+scripts/check_deployment.sh [http://localhost:8001]   # checks a running backend (no LLM cost), see below
 ```
+
+### Deployment check
+`scripts/check_deployment.sh` checks a running backend without calling the LLM: health, DB and catalog (68
+actuators), Swagger UI, login of both test users and a wrong password, token required, session endpoints, error
+format, and debug endpoints allowed for the admin and refused (403) for the regular user. Point it at any URL, e.g. the
+PC's LAN IP before connecting the phone: `scripts/check_deployment.sh http://192.168.1.20:8001`.
+
+### Continuous integration (GitHub Actions, `.github/workflows/`)
+| Workflow | Runs on | What it checks |
+|---|---|---|
+| `backend.yml` · Backend | changes in `backend/`, `data/processed/` | Lint (syntax errors, undefined names); `actuators.json` regenerated from the reviewed `.md` is identical and valid; migrations + ingestion into Postgres/pgvector; table counts (68 actuators, 111 ratings, 118 electrical rows, 7 tables); `pytest` with no skipped tests |
+| `android.yml` · Android | changes in `app/` | JVM unit tests and the debug APK, uploaded as the `app-debug-apk` artifact (download it from the run page and install it with `adb install`) |
+| `deploy.yml` · Deployment | changes in `backend/`, `docker-compose.yml`, `.env.example`, data | `cp .env.example .env` + `docker compose up --build` exactly as in this README, `scripts/check_deployment.sh`, then a backend restart: the checks pass again and the catalog is not reloaded (data persists) |
+
+None of them spends OpenRouter credit. The Deployment workflow has an optional job that runs real multi-turn
+conversations (`backend/scripts/smoke_conversation.py`, < USD 0.02): add the repository secret `OPENROUTER_API_KEY`
+(Settings → Secrets and variables → Actions), then Actions → Deployment → Run workflow → tick `real_agent`.
+All three can also be started by hand from the Actions tab.
 
 ## 11. Repository layout
 ```
@@ -378,6 +410,8 @@ backend/                  FastAPI + LangChain (uv project)
 app/                      Android app (Gradle project, module :app)
 data/processed/           reviewed Markdown + actuators.json (ingestion source)
 docs/                     assessment, source PDFs, API contract, retrieval evaluation
+scripts/check_deployment.sh   checks a running backend (no LLM cost)
+.github/workflows/        CI: backend tests, Android build, deployment check
 CLAUDE.md, .claude/       AI assistant configuration (Claude Code)
 ```
 

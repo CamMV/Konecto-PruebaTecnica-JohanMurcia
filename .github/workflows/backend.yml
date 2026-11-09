@@ -1,0 +1,96 @@
+# Backend: lint, processed data consistency, ingestion into Postgres + pgvector, and the test suite.
+# No LLM calls: the API tests use a fake agent, so this never spends the OpenRouter budget.
+name: Backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - "data/processed/**"
+      - ".github/workflows/backend.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - "data/processed/**"
+      - ".github/workflows/backend.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: backend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Lint, data and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      db:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: konecto
+          POSTGRES_PASSWORD: konecto
+          POSTGRES_DB: konecto
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U konecto -d konecto"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql+psycopg://konecto:konecto@localhost:5432/konecto
+      JWT_SECRET: ci-only-secret
+      DEBUG_API_ENABLED: "true"
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Lint (syntax errors and undefined names)
+        run: uv tool run ruff check --isolated --select E9,F63,F7,F82 app tests pipeline scripts alembic
+
+      - name: Processed data is in sync (md → actuators.json) and valid
+        run: |
+          uv run python -m pipeline.parse_markdown --out "$RUNNER_TEMP/actuators.json"
+          diff -u ../data/processed/actuators.json "$RUNNER_TEMP/actuators.json"
+          uv run python -m pipeline.validate
+
+      - name: Migrations + ingestion
+        run: uv run python -m pipeline.ingest
+
+      - name: Catalog loaded as expected
+        run: |
+          uv run python - <<'EOF'
+          from sqlalchemy import text
+          from app.db.session import SessionLocal
+          expected = {"actuator": 68, "actuator_rating": 111, "actuator_electrical": 118, "source_table": 7}
+          with SessionLocal() as db:
+              got = {t: db.scalar(text(f"SELECT count(*) FROM {t}")) for t in expected}
+              got["actuator_flat"] = db.scalar(text("SELECT count(*) FROM actuator_flat"))
+          expected["actuator_flat"] = 68
+          print(got)
+          assert got == expected, f"expected {expected}"
+          EOF
+
+      - name: Tests
+        # The DB tests skip themselves when Postgres is missing; in CI a skip means a broken setup, so it fails.
+        run: |
+          set -o pipefail
+          uv run pytest -q -rs | tee "$RUNNER_TEMP/pytest.log"
+          if grep -qi "skipped" "$RUNNER_TEMP/pytest.log"; then echo "::error::Tests were skipped"; exit 1; fi

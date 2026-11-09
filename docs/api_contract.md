@@ -23,7 +23,9 @@ Source of truth in code: `backend/app/api/schemas.py`. Interactive OpenAPI at `h
 | Extra | DELETE | `/api/sessions/{session_id}` | ✅ | Delete a conversation (mobile "Delete Chat") |
 | Suggested (login) | POST | `/api/auth/login` | — | Email + password → token |
 | Extra | GET | `/api/auth/me` | ✅ | Validate a saved token (app startup) |
-| Extra (debug) | GET | `/api/messages/{message_id}/debug` | ✅ admin | Trace of an answer for the debug screen |
+| Extra (debug) | GET | `/api/debug/sessions` | ✅ admin | Every user's conversations, each with its owner |
+| Extra (debug) | GET | `/api/debug/sessions/{session_id}/messages` | ✅ admin | History of any user's conversation |
+| Extra (debug) | GET | `/api/messages/{message_id}/debug` | ✅ admin | Trace of an answer (any user) for the debug screen |
 | Extra | GET | `/api/health` | — | Service and DB status |
 
 Changes compared with the assessment's suggestion (justified in the README):
@@ -33,7 +35,8 @@ Changes compared with the assessment's suggestion (justified in the README):
 - `client_message_id` in `POST /api/conversation`: idempotency for retries with intermittent connectivity.
 - `/api/auth/me` and `/api/health` added.
 - `DELETE /api/sessions/{id}` added (the app's "Delete Chat" action).
-- Roles: `user.is_admin`. Only administrators can read debug traces (the app shows the Debug button only to them).
+- Roles: `user.is_admin`. Only administrators can use the debug endpoints (the app shows the Debug button only to them);
+  they see **every user's** conversations and traces, grouped by user in the app.
 
 ---
 
@@ -157,9 +160,32 @@ Deletes the conversation with its messages and debug traces. `204` with no body.
 Errors: `404 SESSION_NOT_FOUND` (it doesn't exist, was already deleted, or belongs to another user). The mobile app
 treats `404` as success when it syncs an offline deletion.
 
-## GET /api/messages/{message_id}/debug
-For the debug screen, **administrators only** (`user.is_admin`, otherwise `403 ADMIN_REQUIRED`). It requires
-`DEBUG_API_ENABLED=true` on the backend (otherwise `503 DEBUG_DISABLED`) and that the message belongs to the user.
+## Debug endpoints (admins only)
+All of them require `user.is_admin` (otherwise `403 ADMIN_REQUIRED`) and `DEBUG_API_ENABLED=true` on the backend
+(otherwise `503 DEBUG_DISABLED`). They cover **every user's** conversations: the normal `/api/sessions…` endpoints stay
+scoped to the caller.
+
+### GET /api/debug/sessions?limit=100&offset=0
+Same items as `GET /api/sessions` plus the owner, for all users, newest first (`limit` ≤ 500):
+```json
+{
+  "items": [
+    {
+      "id": "c1d2…", "title": "What pieces are 220 V?", "created_at": "…", "updated_at": "…",
+      "message_count": 2, "last_message_preview": "The following Series 76 models…",
+      "user": { "id": "7b0e…", "email": "luis@konecto.test", "name": "Luis Gómez", "is_admin": false }
+    }
+  ],
+  "total": 19
+}
+```
+
+### GET /api/debug/sessions/{session_id}/messages
+Same response as `GET /api/sessions/{session_id}/messages`, for a conversation of any user. `404 SESSION_NOT_FOUND`
+if it doesn't exist.
+
+### GET /api/messages/{message_id}/debug
+Trace of one answer of any user. `404 MESSAGE_NOT_FOUND` if the message doesn't exist or has no trace.
 ```json
 {
   "message_id": "9a8b…",

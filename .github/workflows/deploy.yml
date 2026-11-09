@@ -1,0 +1,117 @@
+# Deployment: builds the Docker image and starts the stack exactly as the README says (`docker compose up`), then
+# checks the running API with scripts/check_deployment.sh, before and after a restart (data must persist).
+# The optional "real agent" job runs a few real conversations and spends OpenRouter credit (< USD 0.02), so it only
+# runs on demand: Actions → Deployment → Run workflow → "real_agent", with the OPENROUTER_API_KEY repository secret.
+name: Deployment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - "data/processed/**"
+      - "docker-compose.yml"
+      - ".env.example"
+      - ".dockerignore"
+      - "scripts/check_deployment.sh"
+      - ".github/workflows/deploy.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - "data/processed/**"
+      - "docker-compose.yml"
+      - ".env.example"
+      - ".dockerignore"
+      - "scripts/check_deployment.sh"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+    inputs:
+      real_agent:
+        description: "Also run real conversations against the LLM (spends OpenRouter, needs the OPENROUTER_API_KEY secret)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compose:
+    name: docker compose up + API checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create .env from .env.example
+        run: |
+          cp .env.example .env
+          sed -i "s|^JWT_SECRET=.*|JWT_SECRET=$(openssl rand -hex 32)|" .env
+
+      - name: Build and start (db + backend)
+        run: docker compose up -d --build --wait --wait-timeout 180
+
+      - name: Check the deployment
+        run: scripts/check_deployment.sh http://localhost:8001
+
+      - name: Restart and check again (data persists in the volume)
+        run: |
+          docker compose restart backend
+          for i in $(seq 1 30); do curl -sf http://localhost:8001/api/health && break; sleep 2; done
+          scripts/check_deployment.sh http://localhost:8001
+          docker compose logs backend | grep -q "Catalog already loaded" \
+            || { echo "::error::The catalog was reloaded after a restart"; exit 1; }
+
+      - name: Logs
+        if: always()
+        run: docker compose logs --no-color
+
+      - name: Stop
+        if: always()
+        run: docker compose down -v
+
+  real-agent:
+    name: Real agent smoke test (on demand)
+    if: github.event_name == 'workflow_dispatch' && inputs.real_agent
+    needs: compose
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Require the OpenRouter secret
+        run: |
+          [ -n "$OPENROUTER_API_KEY" ] || { echo "::error::Add the OPENROUTER_API_KEY repository secret"; exit 1; }
+
+      - name: Create .env
+        run: |
+          cp .env.example .env
+          sed -i "s|^JWT_SECRET=.*|JWT_SECRET=$(openssl rand -hex 32)|" .env
+          sed -i "s|^OPENROUTER_API_KEY=.*|OPENROUTER_API_KEY=$OPENROUTER_API_KEY|" .env
+
+      - name: Build and start
+        run: docker compose up -d --build --wait --wait-timeout 180
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+
+      - name: Multi-turn conversations, edge cases and persistence
+        working-directory: backend
+        run: |
+          uv sync --frozen
+          uv run python scripts/smoke_conversation.py --base-url http://localhost:8001
+
+      - name: Logs
+        if: always()
+        run: docker compose logs --no-color backend
+
+      - name: Stop
+        if: always()
+        run: docker compose down -v

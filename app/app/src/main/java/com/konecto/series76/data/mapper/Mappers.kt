@@ -4,6 +4,7 @@ import com.konecto.series76.core.DateFormats
 import com.konecto.series76.data.local.db.MessageEntity
 import com.konecto.series76.data.local.db.SessionEntity
 import com.konecto.series76.data.remote.dto.ConversationResponse
+import com.konecto.series76.data.remote.dto.DebugSessionDto
 import com.konecto.series76.data.remote.dto.DebugStepDto
 import com.konecto.series76.data.remote.dto.DebugTraceDto
 import com.konecto.series76.data.remote.dto.MessageDto
@@ -11,12 +12,14 @@ import com.konecto.series76.data.remote.dto.SessionSummaryDto
 import com.konecto.series76.domain.model.AnswerStatus
 import com.konecto.series76.domain.model.ChatMessage
 import com.konecto.series76.domain.model.ChatSession
+import com.konecto.series76.domain.model.DebugSession
 import com.konecto.series76.domain.model.DebugStep
 import com.konecto.series76.domain.model.DebugTrace
 import com.konecto.series76.domain.model.ProductCard
 import com.konecto.series76.domain.model.Role
 import com.konecto.series76.domain.model.SendState
 import com.konecto.series76.domain.model.SyncState
+import com.konecto.series76.domain.model.User
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.serializer
 import kotlinx.serialization.builtins.serializer
@@ -120,6 +123,17 @@ class Mappers @Inject constructor(private val json: Json) {
     )
 
     // ------------------------------------------------------------------ debug
+
+    fun debugSession(dto: DebugSessionDto) = DebugSession(
+        id = dto.id,
+        title = dto.title,
+        updatedAt = DateFormats.parseIso(dto.updatedAt),
+        messageCount = dto.messageCount,
+        owner = User(dto.user.id, dto.user.email, dto.user.name, dto.user.isAdmin),
+    )
+
+    /** Debug history of any user's chat: same mapping as the Room path, without storing it. */
+    fun debugMessage(dto: MessageDto, sessionId: String) = message(messageEntity(dto, sessionId))
 
     fun encodeTrace(dto: DebugTraceDto): String = json.encodeToString(serializer<DebugTraceDto>(), dto)
 

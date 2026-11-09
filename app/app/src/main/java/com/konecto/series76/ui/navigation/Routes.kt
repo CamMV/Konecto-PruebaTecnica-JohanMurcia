@@ -16,7 +16,9 @@ sealed interface Route {
 
     @Serializable data object DebugChats : Route
 
-    @Serializable data class DebugAnswers(val sessionId: String, val chatLabel: String) : Route
+    /** [userName] = owner of the chat (debug lists every user's chats). */
+    @Serializable data class DebugAnswers(val sessionId: String, val chatLabel: String, val userName: String) : Route
 
-    @Serializable data class DebugAnswer(val sessionId: String, val messageId: String, val title: String) : Route
+    @Serializable
+    data class DebugAnswer(val sessionId: String, val messageId: String, val title: String, val userName: String) : Route
 }

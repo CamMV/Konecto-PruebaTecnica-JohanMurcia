@@ -1,5 +1,14 @@
 package com.konecto.series76.domain.model
 
+/** A conversation as the debug screen sees it: any user's, with its owner. */
+data class DebugSession(
+    val id: String,
+    val title: String,
+    val updatedAt: Long,
+    val messageCount: Int,
+    val owner: User,
+)
+
 /** Agent trace of one answer (GET /api/messages/{id}/debug), ready for the debug screen. */
 data class DebugTrace(
     val messageId: String,

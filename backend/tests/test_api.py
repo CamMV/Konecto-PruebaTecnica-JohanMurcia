@@ -218,10 +218,11 @@ def test_client_created_session_and_isolation(client, users, agent):
     assert r.status_code == 404 and r.json()["error"]["code"] == "SESSION_NOT_FOUND"
     msg_id = client.get(f"/api/sessions/{sid}/messages", headers=ha).json()["messages"][1]["id"]
     assert client.get(f"/api/messages/{msg_id}/debug", headers=hb).status_code == 403  # b is not an admin
-    # The admin, on b's message → 404: admins only see the traces of their own chats.
+    # The admin can read the trace of b's message (debug covers every user; see test_debug_sees_every_user).
     sid_b = client.post("/api/conversation", json={"query": "761A"}, headers=hb).json()["session_id"]
     msg_b = client.get(f"/api/sessions/{sid_b}/messages", headers=hb).json()["messages"][1]["id"]
-    assert client.get(f"/api/messages/{msg_b}/debug", headers=ha).status_code == 404
+    assert client.get(f"/api/messages/{msg_b}/debug", headers=ha).status_code == 200
+    assert client.get(f"/api/messages/{uuid.uuid4()}/debug", headers=ha).status_code == 404
 
 
 def test_debug_admin_only(client, users, agent):
@@ -239,9 +240,32 @@ def test_debug_admin_only(client, users, agent):
     assert client.get(f"/api/messages/{uuid.uuid4()}/debug", headers=hb).status_code == 403
 
 
+def test_debug_sees_every_user(client, users, agent):
+    ha, hb = login(client, users[0]), login(client, users[1])
+    rb = client.post("/api/conversation", json={"query": "761A00-11300000/A"}, headers=hb).json()
+    ra = client.post("/api/conversation", json={"query": "762A00-11300000/A"}, headers=ha).json()
+    # The admin lists every user's chats, each one with its owner.
+    items = client.get("/api/debug/sessions?limit=500", headers=ha).json()["items"]
+    owners = {i["id"]: i["user"]["email"] for i in items}
+    assert owners[rb["session_id"]] == users[1] and owners[ra["session_id"]] == users[0]
+    # ...and opens another user's history and traces.
+    msgs = client.get(f"/api/debug/sessions/{rb['session_id']}/messages", headers=ha)
+    assert msgs.status_code == 200 and [m["role"] for m in msgs.json()["messages"]] == ["user", "assistant"]
+    assert client.get(f"/api/messages/{rb['message_id']}/debug", headers=ha).status_code == 200
+    # The normal endpoints stay scoped to the owner.
+    assert client.get(f"/api/sessions/{rb['session_id']}/messages", headers=ha).status_code == 404
+    # Regular users get 403 on every debug endpoint.
+    for path in ("/api/debug/sessions", f"/api/debug/sessions/{rb['session_id']}/messages"):
+        r = client.get(path, headers=hb)
+        assert r.status_code == 403 and r.json()["error"]["code"] == "ADMIN_REQUIRED"
+    assert client.get(f"/api/debug/sessions/{uuid.uuid4()}/messages", headers=ha).status_code == 404
+
+
 def test_debug_disabled(client, users, agent, monkeypatch):
     monkeypatch.setattr(get_settings(), "debug_api_enabled", False)
     r = client.get(f"/api/messages/{uuid.uuid4()}/debug", headers=login(client, users[0]))
+    assert r.status_code == 503 and r.json()["error"]["code"] == "DEBUG_DISABLED"
+    r = client.get("/api/debug/sessions", headers=login(client, users[0]))
     assert r.status_code == 503 and r.json()["error"]["code"] == "DEBUG_DISABLED"
 
 

@@ -161,6 +161,15 @@ class SessionMessages(BaseModel):
 
 # ---------------------------------------------------------------- debug
 
+class DebugSessionSummary(SessionSummary):
+    user: UserOut = Field(description="Owner of the conversation (the debug list groups chats by user)")
+
+
+class DebugSessionList(BaseModel):
+    items: list[DebugSessionSummary]
+    total: int
+
+
 class DebugStep(BaseModel):
     type: Literal["tool_call"] = "tool_call"
     name: str
