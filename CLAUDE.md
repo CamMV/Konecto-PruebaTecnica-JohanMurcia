@@ -29,9 +29,15 @@ Base Part Number) and recommends models based on requirements. Full spec in
    WorkManager), runtime-changeable backend URL. Verified on the `Pixel_9` emulator (API 37) against the real backend.
    See "Mobile app".
 
+## Delivery docs
+- `README.md` (English) is the reviewer-facing guide mapped to section 8 of the assessment: setup/env vars, Docker,
+  ingestion, models, API deviations, app build + phone install (USB `adb reverse` or PC LAN IP), debug screen, design.
+  Keep it in sync when ports, commands, env vars or test users change. `.claude/settings.json` is the versioned
+  Claude Code config (`settings.local.json` is ignored by the user's global gitignore).
+
 ## Layout
 ```
-docker-compose.yml        # db (pgvector/pgvector:pg17) + backend (port ${BACKEND_PORT}, default 8000)
+docker-compose.yml        # db (pgvector/pgvector:pg17) + backend (port ${BACKEND_PORT}, default 8001, matches the app default URL; both services `restart: unless-stopped`)
 app/                      # Android app (Gradle root, module :app, package com.konecto.series76). See "Mobile app"
 .dockerignore
 .env.example              # copy to .env
@@ -100,7 +106,7 @@ Ingestion (`ingest --from-md`) **does not need API keys**: it starts from the re
 
 ## Database state (verified 2026-11-03)
 - Container `konecto-db` (`pgvector/pgvector:pg17`), persistent volume `konecto_pgdata`, migrations `0001` + `0002`
-  applied, extensions `vector` + `pg_trgm`. Container `konecto-backend` on port 8001 (`BACKEND_PORT` in `.env`).
+  applied, extensions `vector` + `pg_trgm`. Container `konecto-backend` on port 8001 (`BACKEND_PORT` in `.env`, also the `.env.example` default).
 - Conversations: `app_user` (2 test users), `chat_session`, `chat_message`, `message_trace`.
 - Data loaded from the reviewed `data/processed/series_76_electric_data.md` (identical to `actuators.json`):
   `source_table` 7 · `actuator` 68 (4 N/A, 5 not CSA) · `actuator_rating` 111 · `actuator_electrical` 118 ·

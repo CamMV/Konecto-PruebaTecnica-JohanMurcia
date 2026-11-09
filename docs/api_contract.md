@@ -1,6 +1,6 @@
 # API contract: Series 76 Technical Assistant
 
-Source of truth in code: `backend/app/api/schemas.py`. Interactive OpenAPI at `http://localhost:8000/docs`.
+Source of truth in code: `backend/app/api/schemas.py`. Interactive OpenAPI at `http://localhost:8001/docs`.
 
 ## Conventions
 - JSON, everything under `/api`. UUID v4 ids. ISO-8601 dates in UTC.

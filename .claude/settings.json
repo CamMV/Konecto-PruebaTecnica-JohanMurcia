@@ -1,0 +1,10 @@
+{
+  "enabledPlugins": {
+    "figma@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "mcp__plugin_figma_figma__create_session"
+    ]
+  }
+}

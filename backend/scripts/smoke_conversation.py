@@ -1,7 +1,7 @@
 """Smoke test of the real agent over HTTP (spends OpenRouter: < USD 0.01 per run).
 
-    uv run uvicorn app.main:app --port 8000 &
-    uv run python scripts/smoke_conversation.py [--base-url http://localhost:8000]
+    uv run uvicorn app.main:app --port 8001 &
+    uv run python scripts/smoke_conversation.py [--base-url http://localhost:8001]
 
 Runs a scripted multi-turn conversation (follow-up without repeating the part number + edge cases)
 and prints status, cards, tools used and grounding for each turn.
@@ -30,7 +30,7 @@ SCRIPT = [
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--base-url", default="http://localhost:8000")
+    ap.add_argument("--base-url", default="http://localhost:8001")
     ap.add_argument("--email", default="ana@konecto.test")
     ap.add_argument("--password", default="Series76!demo")
     args = ap.parse_args()
