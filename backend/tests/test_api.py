@@ -261,6 +261,25 @@ def test_debug_sees_every_user(client, users, agent):
     assert client.get(f"/api/debug/sessions/{uuid.uuid4()}/messages", headers=ha).status_code == 404
 
 
+def test_missing_api_key(client, users, monkeypatch):
+    """Without OPENROUTER_API_KEY: validation still answers 422 and a real turn gets a clear 503 (not a 500)."""
+    from app.agent import graph
+    from app import llm
+
+    monkeypatch.setattr(get_settings(), "openrouter_api_key", None)
+    graph.get_agent.cache_clear()
+    llm.get_chat_model.cache_clear()
+    try:
+        h = login(client, users[0])
+        r = client.post("/api/conversation", json={"query": ""}, headers=h)
+        assert r.status_code == 422 and r.json()["error"]["code"] == "VALIDATION_ERROR"
+        r = client.post("/api/conversation", json={"query": "761A00-11300000/A"}, headers=h)
+        assert r.status_code == 503 and r.json()["error"]["code"] == "LLM_NOT_CONFIGURED"
+    finally:
+        graph.get_agent.cache_clear()
+        llm.get_chat_model.cache_clear()
+
+
 def test_debug_disabled(client, users, agent, monkeypatch):
     monkeypatch.setattr(get_settings(), "debug_api_enabled", False)
     r = client.get(f"/api/messages/{uuid.uuid4()}/debug", headers=login(client, users[0]))

@@ -121,7 +121,7 @@ Errors: `401 INVALID_CREDENTIALS`, `422 VALIDATION_ERROR`.
 - `phase`: `1`, `3` or `null` (24V AC/DC / DC).
 
 Errors: `401 UNAUTHORIZED`, `404 SESSION_NOT_FOUND`, `422 VALIDATION_ERROR`, `502 LLM_UNAVAILABLE`, `504 LLM_TIMEOUT`,
-`503 DB_UNAVAILABLE`. If the agent fails, the user's message is saved but no answer is; retrying with the same
+`503 DB_UNAVAILABLE`, `503 LLM_NOT_CONFIGURED` (the server has no `OPENROUTER_API_KEY`). If the agent fails, the user's message is saved but no answer is; retrying with the same
 `client_message_id` is safe.
 
 ## GET /api/sessions?limit=20&offset=0

@@ -41,10 +41,22 @@ def get_admin_user(user: Annotated[AppUser, Depends(get_current_user)]) -> AppUs
     return user
 
 
+class _UnconfiguredAgent:
+    """Stands in for the agent when there is no API key: the request is still validated and the session handled as
+    usual, and only the agent call fails, with a clear 503 instead of a generic 500."""
+
+    def invoke(self, *args: Any, **kwargs: Any) -> Any:
+        raise ApiError(503, "LLM_NOT_CONFIGURED", "The language model is not configured on the server (OPENROUTER_API_KEY)")
+
+
 def get_agent() -> Any:
     from app.agent.graph import get_agent as build
+    from app.llm import LLMNotConfiguredError
 
-    return build()
+    try:
+        return build()
+    except LLMNotConfiguredError:
+        return _UnconfiguredAgent()
 
 
 DbDep = Annotated[Session, Depends(get_db)]

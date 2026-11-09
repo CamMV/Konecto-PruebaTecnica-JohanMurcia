@@ -35,10 +35,12 @@ jobs:
           distribution: temurin
           java-version: "21"
 
+      # The action's default packages include "tools", which Google no longer publishes (sdkmanager fails), so the
+      # list is explicit: what compileSdk 37 needs.
       - uses: android-actions/setup-android@v3
-
-      - name: Install SDK packages (compileSdk 37)
-        run: sdkmanager "platforms;android-37.0" "build-tools;36.0.0"
+        with:
+          packages: "platform-tools platforms;android-37.0 build-tools;36.0.0"
+          log-accepted-android-sdk-licenses: false
 
       - uses: gradle/actions/setup-gradle@v4
 

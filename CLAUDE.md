@@ -81,7 +81,7 @@ uv run python -m pipeline.build_index --no-embeddings   # lexical only, no key
 uv run python -m pipeline.eval_retrieval   # A (lexical/dense/hybrid) vs B (structured) metrics
 uv run python -m app.auth.seed             # test users (idempotent)
 uv run uvicorn app.main:app --port 8001 --reload   # local API (8000 is taken by Coolify on this machine)
-uv run pytest                              # 39 tests (API with a fake agent: no LLM cost)
+uv run pytest                              # 40 tests (API with a fake agent: no LLM cost)
 uv run python scripts/smoke_conversation.py --base-url http://localhost:8001   # real agent (spends OpenRouter)
 
 # Mobile app (from app/; needs local.properties with sdk.dir=/home/milo/Android/Sdk)

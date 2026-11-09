@@ -60,7 +60,7 @@ Log in with `ana@konecto.test` / `Series76!demo`. Details for every step follow.
 ### Environment variables (`.env`, copied from `.env.example`)
 | Variable | Required | Default | Purpose |
 |---|---|---|---|
-| `OPENROUTER_API_KEY` | **yes** | — | LLM for the agent (and embeddings for the optional approach A index) |
+| `OPENROUTER_API_KEY` | **yes** | — | LLM for the agent (and embeddings for the optional approach A index). Without it everything else works and `POST /api/conversation` answers `503 LLM_NOT_CONFIGURED` |
 | `JWT_SECRET` | **yes** (change it) | `change-me` | Signs login tokens. `python -c "import secrets; print(secrets.token_urlsafe(32))"` |
 | `AGENT_MODEL` | no | `anthropic/claude-haiku-5.5` | Agent model (OpenRouter id) |
 | `BACKEND_PORT` | no | `8001` | Host port of the API |
@@ -369,7 +369,7 @@ Not implemented.
 ## 10. Tests
 
 ```bash
-cd backend && uv run pytest              # 39 tests; API tests use a fake agent (no LLM cost); DB tests skip if Postgres is down
+cd backend && uv run pytest              # 40 tests; API tests use a fake agent (no LLM cost); DB tests skip if Postgres is down
 uv run python -m pipeline.eval_retrieval # retrieval metrics A vs B
 uv run python scripts/smoke_conversation.py --base-url http://localhost:8001   # real agent, 8 scenarios (< USD 0.02)
 
